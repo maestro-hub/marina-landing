@@ -374,7 +374,11 @@ footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:cen
   .bonus-strip{ flex-direction:column; align-items:flex-start; text-align:left; }
   .mech-body{ flex-direction:column; }
   .mech-photo{ max-width: 280px; order:-1; }
-  .sitenav .links{ justify-content:center; }
+  .sitenav{ padding: 16px 0; }
+  .sitenav .wrap{ justify-content:space-between; flex-wrap:nowrap; }
+  .sitenav .links{ justify-content:flex-end; gap:10px; }
+  .sitenav .links a:not(.cta){ display:none; }
+  .sitenav .links a.cta{ padding:8px 14px; font-size:.8rem; white-space:nowrap; }
   .article-author{ flex-direction:column; text-align:center; }
   .eyebrow span{ white-space:normal; text-align:center; }
   .eyebrow .line{ display:none; }
