@@ -104,7 +104,7 @@ a{ color:var(--gold-light); }
 .hero{ padding: 30px 0 40px; text-align:center; }
 .hero-grid{ display:grid; grid-template-columns: 1.15fr 0.85fr; gap:36px; align-items:center; text-align:left; }
 .hero-copy{ min-width:0; }
-.hero-visual{ text-align:center; }
+.hero-visual{ display:flex; flex-direction:column; align-items:center; text-align:center; }
 .hero-portrait{ position:relative; margin: 0 auto 14px; width:230px; height:230px; }
 .hero-portrait img{
   width:100%; height:100%; border-radius:50%; object-fit:cover; object-position:center 22%; display:block;
@@ -113,17 +113,17 @@ a{ color:var(--gold-light); }
 .hero-portrait-caption{ margin:0; font-size:13px; color:var(--cream-muted); letter-spacing:.3px; }
 
 .speech-bubble{
-  position:absolute; top:-14px; right:-98px; z-index:2; max-width:150px;
+  position:relative; align-self:flex-end; margin: 0 8px 14px 0; z-index:2; max-width:150px;
   background: var(--cream-panel); color: var(--cream-panel-text);
   border: 2px solid var(--gold); border-radius: 16px 16px 16px 4px;
   padding: 10px 14px; text-align:center; box-shadow: var(--card-shadow);
   transform: rotate(3deg);
 }
 .speech-bubble::after{
-  content:''; position:absolute; left:-9px; bottom:10px;
+  content:''; position:absolute; left:16px; bottom:-9px;
   width:16px; height:16px; background:var(--cream-panel);
   border-left:2px solid var(--gold); border-bottom:2px solid var(--gold);
-  border-radius:0 0 0 3px; transform: rotate(20deg);
+  border-radius:0 0 0 3px; transform: rotate(-45deg);
 }
 .sb-text{ display:block; font-family:'Inter',sans-serif; font-weight:700; font-size:.86rem; line-height:1.25; }
 .sb-ipa{ display:block; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--pain-border); font-size:.82rem; margin-top:3px; }
@@ -400,7 +400,7 @@ footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:cen
   .eyebrow .line{ display:none; }
   .hero-portrait{ width:200px; height:200px; }
   .hero-portrait img{ border-width:4px; }
-  .speech-bubble{ max-width:120px; right:-64px; padding:7px 10px; }
+  .speech-bubble{ max-width:150px; padding:7px 10px; margin-right:6px; }
   .sb-text{ font-size:.74rem; }
   .sb-ipa{ font-size:.7rem; }
 }
