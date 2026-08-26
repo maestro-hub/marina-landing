@@ -321,6 +321,8 @@ footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:cen
   .mech-photo{ max-width: 280px; order:-1; }
   .sitenav .links{ justify-content:center; }
   .article-author{ flex-direction:column; text-align:center; }
+  .eyebrow span{ white-space:normal; text-align:center; }
+  .eyebrow .line{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){
