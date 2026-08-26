@@ -92,7 +92,7 @@ p{ line-height:1.65; color:var(--cream-soft); margin:0 0 1em 0; }
 a{ color:var(--gold-light); }
 
 /* --- Top nav (site-wide, not on the Claude-artifact version) --- */
-.sitenav{ padding: 22px 0; }
+.sitenav{ padding: 16px 0; }
 .sitenav .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .sitenav .brand{ font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--cream-panel); font-size:1.15rem; text-decoration:none; }
 .sitenav .links{ display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
@@ -101,13 +101,16 @@ a{ color:var(--gold-light); }
 .sitenav .links a.cta{ color:var(--cream-panel-text); background:var(--gold); padding:8px 16px; border-radius:999px; font-weight:700; font-size:.85rem; }
 
 /* --- Hero --- */
-.hero{ padding: 72px 0 76px; text-align:center; }
-.hero-portrait{ position:relative; margin: 0 auto 18px; width:280px; height:280px; }
+.hero{ padding: 30px 0 40px; text-align:center; }
+.hero-grid{ display:grid; grid-template-columns: 1.15fr 0.85fr; gap:36px; align-items:center; text-align:left; }
+.hero-copy{ min-width:0; }
+.hero-visual{ text-align:center; }
+.hero-portrait{ position:relative; margin: 0 auto 14px; width:230px; height:230px; }
 .hero-portrait img{
   width:100%; height:100%; border-radius:50%; object-fit:cover; object-position:center 22%; display:block;
   border:5px solid var(--gold); box-shadow:0 12px 32px rgba(0,0,0,0.35);
 }
-.hero-portrait-caption{ margin:0 0 26px; font-size:13.5px; color:var(--cream-muted); letter-spacing:.3px; }
+.hero-portrait-caption{ margin:0; font-size:13px; color:var(--cream-muted); letter-spacing:.3px; }
 
 .speech-bubble{
   position:absolute; top:-6px; right:-52px; z-index:2; max-width:168px;
@@ -125,8 +128,11 @@ a{ color:var(--gold-light); }
 .sb-text{ display:block; font-family:'Inter',sans-serif; font-weight:700; font-size:.86rem; line-height:1.25; }
 .sb-ipa{ display:block; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--pain-border); font-size:.82rem; margin-top:3px; }
 .soundwave{ display:block; width:140px; height:36px; margin:28px auto 0; }
-.hero .kicker-trust{ margin-top: 34px; font-size:13.5px; color: var(--cream-muted); letter-spacing:.3px; }
-.hero .lead{ margin: 22px auto 0; }
+.hero .kicker-trust{ margin-top: 18px; font-size:12.5px; color: var(--cream-muted); letter-spacing:.3px; max-width:52ch; }
+.hero .lead{ margin: 16px 0 0; max-width:54ch; }
+.hero .cta-row{ justify-content:flex-start; margin-top:22px; }
+.hero .eyebrow{ justify-content:flex-start; }
+.hero h1{ font-size: clamp(1.9rem, 3.4vw, 2.9rem); }
 
 .btn{
   display:inline-flex; align-items:center; gap:8px;
@@ -366,8 +372,18 @@ footer .brand{ font-size:12.5px; letter-spacing:1.4px; color:var(--cream-muted);
 footer a{ color:var(--cream-muted); text-decoration:underline; }
 footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; font-size:12px; }
 
+@media (max-width: 860px){
+  .hero-grid{ grid-template-columns:1fr; text-align:center; gap:0; }
+  .hero-visual{ order:-1; margin-bottom:22px; }
+  .hero-copy{ text-align:center; }
+  .hero .eyebrow{ justify-content:center; }
+  .hero .cta-row{ justify-content:center; }
+  .hero .lead{ margin-left:auto; margin-right:auto; }
+  .hero .kicker-trust{ margin-left:auto; margin-right:auto; }
+}
+
 @media (max-width: 640px){
-  .hero{ padding:56px 0 48px; }
+  .hero{ padding:40px 0 48px; }
   .about-inner{ flex-direction:column; text-align:center; }
   .photo-cluster{ margin: 0 auto; }
   .credentials{ justify-content:center; }
