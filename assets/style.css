@@ -110,7 +110,7 @@ a{ color:var(--gold-light); }
 .hero-portrait-caption{ margin:0 0 26px; font-size:13.5px; color:var(--cream-muted); letter-spacing:.3px; }
 
 .speech-bubble{
-  position:absolute; top:-6px; right:-18px; z-index:2; max-width:168px;
+  position:absolute; top:-6px; right:-52px; z-index:2; max-width:168px;
   background: var(--cream-panel); color: var(--cream-panel-text);
   border: 2px solid var(--gold); border-radius: 16px 16px 16px 4px;
   padding: 10px 14px; text-align:center; box-shadow: var(--card-shadow);
@@ -384,7 +384,7 @@ footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:cen
   .eyebrow .line{ display:none; }
   .hero-portrait{ width:200px; height:200px; }
   .hero-portrait img{ border-width:4px; }
-  .speech-bubble{ max-width:126px; right:-8px; padding:7px 10px; }
+  .speech-bubble{ max-width:126px; right:-40px; padding:7px 10px; }
   .sb-text{ font-size:.74rem; }
   .sb-ipa{ font-size:.7rem; }
 }
