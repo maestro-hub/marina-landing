@@ -15,14 +15,27 @@
   --border-gold: rgba(212,175,106,0.55);
   --border-gold-soft: rgba(212,175,106,0.4);
   --card-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  --card-shadow-hover: 0 12px 28px rgba(0,0,0,0.36);
   --gold:#d4af6a;
   --gold-light:#efc987;
   --cream:#f5ece0;
   --cream-soft:#ecdfc8;
   --cream-muted: rgba(245,236,224,0.6);
-  --pain-border:#a8493c;
+  /* Единственный сознательный ВТОРОЙ акцент на сайте (кроме золота) - кирпично-тёплый,
+     используется ровно в 2 местах, где нужен тёмный текст на светлой кремовой панели
+     (IPA-подпись в облачке) или маркер "это боль, не польза" (левая рамка pain-card).
+     Не путать со случайной несогласованностью - золото читается на тёмном фоне,
+     на светлой панели/кремовом фоне оно нечитаемо, поэтому здесь другой цвет. */
+  --accent-warm:#a8493c;
+  --pain-border: var(--accent-warm);
   --cream-panel:#faf3e6;
   --cream-panel-text:#5a1a15;
+
+  /* Ревизия 2026-08-27: единая шкала радиусов вместо 4 разных значений (10/12/14/16px)
+     у визуально одного типа компонента - см. UI-аудит §8/§12. Два уровня: обычная
+     карточка и "приподнятая" (тарифы/хаб статей), разница осознанная и одна на весь сайт. */
+  --radius-card: 14px;
+  --radius-card-lg: 18px;
 }
 
 * { box-sizing: border-box; }
@@ -79,6 +92,12 @@ section{ position: relative; overflow: hidden; }
 .eyebrow.center{ justify-content:center; }
 
 h1,h2,h3{ font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:400; color:var(--cream-panel); margin:0; text-wrap:balance; }
+/* h1 — три уровня по контексту, не одна и та же шкала (документировано после
+   UI-аудита §3/§12, который отметил это как непрозрачную несостыковку - на деле
+   это осознанные, разные роли): базовый h1 (эта строка, самый крупный - на будущее,
+   сейчас нигде не используется без переопределения) → .hero h1 ниже (центр экрана,
+   должен уступать портрету по вниманию) → .article-hero h1 в конце файла (заголовок
+   статьи, не рекламный посыл, ещё скромнее). */
 h1{ font-size: clamp(2.1rem, 5.2vw, 3.7rem); line-height:1.12; }
 h1 em{ color:var(--gold-light); font-style:italic; }
 h2{ font-size: clamp(1.5rem, 3.2vw, 2.15rem); color:var(--gold-light); line-height:1.2; }
@@ -128,11 +147,31 @@ a{ color:var(--gold-light); }
 .sb-text{ display:block; font-family:'Inter',sans-serif; font-weight:700; font-size:.86rem; line-height:1.25; }
 .sb-ipa{ display:block; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--pain-border); font-size:.82rem; margin-top:3px; }
 .soundwave{ display:block; width:140px; height:36px; margin:28px auto 0; }
-.hero .kicker-trust{ margin-top: 18px; font-size:12.5px; color: var(--cream-muted); letter-spacing:.3px; max-width:52ch; }
+/* Было одно слитное предложение через " · " - три довода читались как один абзац
+   (UI-аудит §1/п.5). Теперь три отдельных коротких пункта. */
+.trust-row{ display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:18px; padding:0; list-style:none; }
+.trust-row li{
+  font-size:12.5px; color:var(--cream-muted); letter-spacing:.2px;
+  display:flex; align-items:center; gap:6px;
+}
+.trust-row li::before{ content:''; width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0; }
 .hero .lead{ margin: 16px 0 0; max-width:54ch; }
-.hero .cta-row{ justify-content:flex-start; margin-top:22px; }
+.hero .cta-row{ justify-content:flex-start; margin-top:22px; align-items:center; }
 .hero .eyebrow{ justify-content:flex-start; }
 .hero h1{ font-size: clamp(1.9rem, 3.4vw, 2.9rem); }
+
+/* Вторая кнопка хиро вела на внешний Telegram-канал - как pill-кнопка она визуально
+   конкурировала по форме с основным CTA "Смотреть тарифы" (UI-аудит §7/п.9). Теперь
+   это тихая текстовая ссылка со стрелкой, не кнопка - действие доступно, но не спорит
+   за внимание с главным шагом воронки. */
+.text-cta{
+  display:inline-flex; align-items:center; gap:6px; color:var(--gold-light);
+  text-decoration:none; font-size:14.5px; font-weight:600; border-bottom:1px solid var(--border-gold-soft);
+  padding-bottom:2px; transition: border-color .15s ease, color .15s ease;
+}
+.text-cta:hover{ border-color:var(--gold-light); color:var(--gold); }
+.text-cta .arrow{ transition: transform .15s ease; }
+.text-cta:hover .arrow{ transform: translateX(3px); }
 
 .btn{
   display:inline-flex; align-items:center; gap:8px;
@@ -153,12 +192,14 @@ a{ color:var(--gold-light); }
 .pain-card{
   position:relative; overflow:hidden;
   background: var(--panel); border-left: 3px solid var(--pain-border);
-  border-radius: 10px; padding: 22px 24px; box-shadow: var(--card-shadow);
+  border-radius: var(--radius-card); padding: 22px 24px; box-shadow: var(--card-shadow);
 }
 .pain-card::before{
-  content:'\201C'; position:absolute; top:-18px; right:6px;
-  font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:5rem;
-  color: rgba(212,175,106,0.14); line-height:1; pointer-events:none;
+  /* Была 5rem/0.14 - на маленькой карточке декоративная кавычка визуально
+     спорила по массе с самим текстом (см. UI-аудит §10). Уменьшена и приглушена. */
+  content:'\201C'; position:absolute; top:-10px; right:8px;
+  font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:3.2rem;
+  color: rgba(212,175,106,0.10); line-height:1; pointer-events:none;
 }
 .pain-card .quote{ position:relative; font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:1.12rem; color:var(--cream-panel); margin:0 0 .5em 0; }
 .pain-card p{ position:relative; font-size:.95rem; margin:0; color: var(--cream-soft); }
@@ -168,7 +209,7 @@ a{ color:var(--gold-light); }
 .content-section .lead{ margin-top:14px; max-width:70ch; }
 .two-col{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:22px; margin-top:32px; }
 .info-card{
-  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:14px; padding:24px 26px;
+  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card); padding:24px 26px;
   box-shadow: var(--card-shadow);
 }
 .info-card h3{ margin-bottom:8px; }
@@ -176,7 +217,7 @@ a{ color:var(--gold-light); }
 
 .result-list{ list-style:none; margin:32px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
 .result-list li{
-  background:var(--panel); border:1px solid var(--border-gold-soft); border-radius:12px; padding:18px 20px;
+  background:var(--panel); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card); padding:18px 20px;
   font-size:.94rem; color:var(--cream-soft); display:flex; gap:12px; align-items:flex-start; box-shadow: var(--card-shadow);
 }
 .result-list .mark{ color:var(--gold); font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:1.2rem; flex-shrink:0; }
@@ -184,10 +225,14 @@ a{ color:var(--gold-light); }
 /* --- Personas --- */
 .persona-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; margin-top:32px; }
 .persona-card{
-  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:14px; padding:24px 26px;
-  box-shadow: var(--card-shadow);
+  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card); padding:24px 26px;
+  box-shadow: var(--card-shadow); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
-.persona-card .tag{ font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--gold); font-weight:700; }
+.persona-card:hover{ transform: translateY(-3px); box-shadow: var(--card-shadow-hover); border-color: var(--border-gold); }
+/* Тег приглушён относительно заголовка (было - оба "золотые и крупные", спорили за
+   роль первого прочитанного элемента, см. UI-аудит §2/п.10) - тег теперь читается
+   как служебная категория, а не второй заголовок. */
+.persona-card .tag{ font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--cream-muted); font-weight:700; }
 .persona-card h3{ margin:8px 0 10px; font-size:1.15rem; }
 .persona-card p{ font-size:.92rem; margin:0; }
 
@@ -197,7 +242,7 @@ a{ color:var(--gold-light); }
 .steps{ display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:22px; counter-reset: step; flex:1.3; }
 .steps-col{ margin-top:0; }
 .mech-photo{ flex:1; min-width:220px; max-width:300px; margin:0; }
-.mech-photo img{ width:100%; display:block; border-radius:14px; border:1px solid var(--border-gold-soft); }
+.mech-photo img{ width:100%; display:block; border-radius:var(--radius-card); border:1px solid var(--border-gold-soft); }
 .mech-photo figcaption{ margin-top:10px; font-size:.82rem; color:var(--cream-muted); text-align:center; font-style:italic; font-family:'Playfair Display',Georgia,serif; }
 .step{ text-align:left; }
 .step .num{
@@ -212,9 +257,10 @@ a{ color:var(--gold-light); }
 .curriculum{ padding: 56px 0 76px; text-align:center; }
 .sound-row{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:34px; }
 .sound-card{
-  width:150px; background:var(--panel); border:1px solid var(--border-gold-soft); border-radius:14px; padding:22px 14px;
-  box-shadow: var(--card-shadow);
+  width:150px; background:var(--panel); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card); padding:22px 14px;
+  box-shadow: var(--card-shadow); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
+.sound-card:hover{ transform: translateY(-3px); box-shadow: var(--card-shadow-hover); border-color: var(--border-gold); }
 .sound-card .medallion{
   width:56px; height:56px; border-radius:50%; border:1.4px solid var(--gold); margin:0 auto 12px;
   display:flex; align-items:center; justify-content:center;
@@ -228,14 +274,30 @@ a{ color:var(--gold-light); }
 .week-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
 .week-pill{ background:var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:999px; padding:8px 18px; font-size:.85rem; color:var(--cream-soft); }
 
+/* --- Pause / big number break (2026-08-27, UI-аудит §11/§13) ---------------------
+   6-9 секций подряд шли по одному шаблону "лейбл → курсивный заголовок → карточки" -
+   эта секция намеренно БЕЗ карточек и без eyebrow-лейбла, чтобы разбить ритм скролла
+   одним крупным типографическим акцентом между "что внутри" и "тарифы". */
+.pause-stat{ padding: 70px 0; text-align:center; }
+.pause-number{
+  font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:700;
+  font-size: clamp(4rem, 12vw, 7rem); line-height:1; color:var(--gold-light);
+}
+.pause-stat p{
+  margin: 14px auto 0; max-width:46ch; font-size:1.15rem; color:var(--cream-soft); line-height:1.5;
+}
+
 /* --- Tariffs --- */
 .tariffs{ padding: 64px 0; }
 .tariff-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:20px; margin-top: 38px; align-items:stretch; }
 .tariff-card{
-  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:16px;
+  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card-lg);
   padding: 30px 26px; display:flex; flex-direction:column; text-align:left; box-shadow: var(--card-shadow);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
+.tariff-card:hover{ transform: translateY(-3px); box-shadow: var(--card-shadow-hover); }
 .tariff-card.featured{ background: var(--panel); border-color: var(--gold); position:relative; }
+.tariff-card.featured:hover{ border-color: var(--gold-light); }
 .tariff-badge{
   position:absolute; top:-13px; left:26px; background:var(--gold); color:#3f1c10;
   font-size:11.5px; font-weight:700; letter-spacing:1px; padding:4px 12px; border-radius:999px; text-transform:uppercase;
@@ -283,10 +345,16 @@ a{ color:var(--gold-light); }
 
 /* --- Testimonials --- */
 .testimonials{ padding:64px 0; }
-.testimonial-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:36px; }
+/* Было minmax(260px,1fr) - на 1440px укладывало 3 в ряд, реальные скриншоты переписки
+   становились нечитаемыми (см. UI-аудит §9/§16, найдено сравнением с мобильной версией,
+   где тот же контент full-width и читается нормально). minmax(380px,1fr) держит
+   максимум 2 в ряд на ширине контейнера 920px, на мобильном стек в 1 колонку не тронут. */
+.testimonial-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:20px; margin-top:36px; }
 .testimonial-card{
-  background:var(--cream-panel); border-radius:14px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.25);
+  background:var(--cream-panel); border-radius:var(--radius-card); padding:20px; box-shadow:0 8px 24px rgba(0,0,0,0.25);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
+.testimonial-card:hover{ transform: translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,0.32); }
 .testimonial-card img{ width:100%; display:block; border-radius:8px; }
 .testimonial-note{ margin-top:22px; text-align:center; font-size:.85rem; color:var(--cream-muted); }
 
@@ -305,7 +373,7 @@ details:focus-within{ outline: 1px solid var(--gold); }
 .articles{ padding:64px 0; }
 .article-list{ margin-top:36px; display:flex; flex-direction:column; gap:16px; }
 .article-card{
-  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:14px;
+  background: var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card);
   padding: 26px 28px; box-shadow: var(--card-shadow);
 }
 .article-card summary{ list-style:none; cursor:pointer; }
@@ -323,7 +391,7 @@ details:focus-within{ outline: 1px solid var(--gold); }
 /* --- Articles hub (separate page) --- */
 .hub-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; margin-top:38px; }
 .hub-card{
-  background:var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:16px; padding:26px 28px;
+  background:var(--panel-soft); border:1px solid var(--border-gold-soft); border-radius:var(--radius-card-lg); padding:26px 28px;
   text-decoration:none; display:flex; flex-direction:column; gap:10px; transition:border-color .15s;
   box-shadow: var(--card-shadow);
 }
@@ -379,7 +447,11 @@ footer .foot-links{ margin-top:10px; display:flex; gap:16px; justify-content:cen
   .hero .eyebrow{ justify-content:center; }
   .hero .cta-row{ justify-content:center; }
   .hero .lead{ margin-left:auto; margin-right:auto; }
-  .hero .kicker-trust{ margin-left:auto; margin-right:auto; }
+  /* Центрировать сам блок, но строки внутри - по левому краю (иначе длинные пункты
+     занимают всю ширину и "льнут" к левому краю, а короткие смещаются к центру -
+     выглядит как рассинхрон, хотя технически всё центрировано корректно). */
+  .hero .trust-row{ flex-direction:column; align-items:flex-start; margin-left:auto; margin-right:auto; max-width:300px; }
+  .hero .trust-row li{ text-align:left; }
 }
 
 @media (max-width: 640px){
