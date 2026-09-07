@@ -96,38 +96,6 @@ section{ position: relative; overflow: hidden; }
   .ambient-light, .watermark{ animation: none !important; }
 }
 
-/* --- Ревизия 2026-09-06 (косметика): предметные акценты поверх IPA-водяных
-   знаков - карта Британии, флаг-медальон, скрепки на отзывах, спираль блокнота
-   на программе. Задача - "физическая" глубина (бумага, скрепки), не новый цвет:
-   карта/скрепки/спираль - тот же золотой контур, что и везде на сайте; флаг -
-   единственное место на сайте с реальными цветами флага (нужны для узнаваемости),
-   поэтому заперт в маленький медальон, как марка/значок, а не плоское пятно. */
-.deco-map{
-  position:absolute; z-index:0; pointer-events:none; color: var(--gold-light);
-  opacity:.09;
-}
-.deco-flag-badge{
-  display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
-  width:34px; height:34px; border-radius:50%; border:1.4px solid var(--gold);
-  background: var(--bg-mid); overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-.deco-flag-badge svg{ width:70%; height:70%; }
-.deco-paperclip{
-  position:absolute; top:-14px; left:22px; z-index:3; pointer-events:none;
-  width:30px; height:44px; color: var(--gold); opacity:.85;
-  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.35));
-}
-.testimonial-card{ overflow: visible; }
-.testimonial-card:nth-child(even) .deco-paperclip{ left:auto; right:22px; }
-
-/* спиральный блокнот вдоль левого края блока "Что внутри" */
-.curriculum{ position:relative; }
-.deco-notebook{
-  position:absolute; top:8%; bottom:8%; left:calc(50% - 460px); width:26px;
-  z-index:0; pointer-events:none; opacity:.5;
-}
-@media (max-width: 980px){ .deco-notebook{ display:none; } }
-
 .eyebrow{ display:flex; align-items:center; gap:14px; margin: 0 0 18px 0; }
 .eyebrow .line{ flex:1; height:1px; background: var(--border-gold-soft); }
 .eyebrow span{ font-size:12.5px; letter-spacing:2.6px; color:var(--gold); font-weight:700; white-space:nowrap; text-transform:uppercase; }
@@ -171,7 +139,7 @@ a{ color:var(--gold-light); }
   width:100%; height:100%; border-radius:50%; object-fit:cover; object-position:center 22%; display:block;
   border:5px solid var(--gold); box-shadow:0 12px 32px rgba(0,0,0,0.35);
 }
-.hero-portrait-caption{ margin:0; font-size:13px; color:var(--cream-muted); letter-spacing:.3px; display:flex; align-items:center; justify-content:center; gap:8px; }
+.hero-portrait-caption{ margin:0; font-size:13px; color:var(--cream-muted); letter-spacing:.3px; }
 
 .speech-bubble{
   position:relative; align-self:flex-end; margin: 0 8px 14px 0; z-index:2; max-width:150px;
@@ -245,14 +213,6 @@ a{ color:var(--gold-light); }
 }
 .pain-card .quote{ position:relative; font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:1.12rem; color:var(--cream-panel); margin:0 0 .5em 0; }
 .pain-card p{ position:relative; font-size:.95rem; margin:0; color: var(--cream-soft); }
-/* Загнутый уголок страницы - подсмотрено на 12psy.ru (карточки-заметки на столе),
-   пересчитано под нашу палитру: без цветного пятна, только тон темнее панели + золотой сгиб. */
-.pain-card::after{
-  content:''; position:absolute; top:0; right:0; width:22px; height:22px;
-  background: linear-gradient(135deg, transparent 50%, var(--bg-bottom) 50.5%);
-  box-shadow: -1px 1px 3px rgba(0,0,0,0.35);
-  border-bottom-left-radius: 3px;
-}
 
 /* --- Generic content section (why-fails, results, etc) --- */
 .content-section{ padding:64px 0; }
@@ -363,17 +323,9 @@ a{ color:var(--gold-light); }
 .tariff-card .btn{ justify-content:center; margin-top:auto; }
 
 .bonus-strip{
-  position:relative;
-  margin-top: 34px; background: var(--panel); border:1px dashed var(--border-gold);
+  margin-top: 30px; background: var(--panel); border:1px dashed var(--border-gold);
   border-radius:12px; padding:18px 26px; display:flex; gap:16px; align-items:center; flex-wrap:wrap;
   justify-content:space-between;
-  transform: rotate(-0.6deg);
-}
-/* "Приколотая записка" - тот же приём с 12psy.ru (заметки под углом), только без
-   ярких цветов: золотая булавка-точка сверху, лёгкий наклон самого блока. */
-.bonus-strip::before{
-  content:''; position:absolute; top:-6px; left:28px; width:10px; height:10px;
-  border-radius:50%; background: var(--gold); box-shadow:0 2px 4px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
 }
 .bonus-strip p{ margin:0; font-size:.92rem; }
 .bonus-strip strong{ color:var(--gold-light); }
