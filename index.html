@@ -414,18 +414,6 @@
   <span class="sticky-cta-text">Интенсив британского произношения · старт совсем скоро</span>
   <a class="btn btn-primary btn-small" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Записаться</a>
 </div>
-<script>
-(function(){
-  var bar = document.getElementById('stickyCta');
-  if(!bar) return;
-  var shown = false;
-  function onScroll(){
-    var should = window.scrollY > window.innerHeight * 0.9;
-    if(should !== shown){ shown = should; bar.classList.toggle('visible', should); }
-  }
-  document.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-</script>
+<script src="/assets/main.js"></script>
 </body>
 </html>
