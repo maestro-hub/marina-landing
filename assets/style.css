@@ -1673,6 +1673,14 @@ a.credential:hover{
     linear-gradient(180deg, #fffdf8, var(--cream-panel));
   box-shadow:0 16px 36px rgba(0,0,0,0.28);
   transition:transform .3s var(--ease-out), box-shadow .25s ease;
+  /* Исходные скрины переписки все разной высоты (80-255px нативно) - без
+     общей рамки карточки получались вразнобой (Сергей отметил, 2026-09-10).
+     Единая высота + object-fit:contain делают все 4 карточки одного размера,
+     короткие скрины просто центрируются на большем "листе". */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:280px;
 }
 
 .testimonial-card:nth-child(odd){
@@ -1691,6 +1699,8 @@ a.credential:hover{
 .testimonial-card img{
   display:block;
   width:100%;
+  max-height:100%;
+  object-fit:contain;
   border-radius:1px;
   box-shadow:none;
 }
