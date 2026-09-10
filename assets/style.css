@@ -133,7 +133,7 @@ section{ position: relative; overflow: hidden; }
 /* спиральный блокнот вдоль левого края блока "Что внутри" */
 .curriculum{ position:relative; }
 .deco-notebook{
-  position:absolute; top:8%; bottom:8%; left:calc(50% - 460px); width:26px;
+  position:absolute; top:15%; bottom:8%; left:calc(50% - 460px); width:26px;
   z-index:0; pointer-events:none; opacity:.5;
 }
 @media (max-width: 980px){ .deco-notebook{ display:none; } }
@@ -142,6 +142,14 @@ section{ position: relative; overflow: hidden; }
 .eyebrow .line{ flex:1; height:1px; background: var(--border-gold-soft); }
 .eyebrow span{ font-size:12.5px; letter-spacing:2.6px; color:var(--gold); font-weight:700; white-space:nowrap; text-transform:uppercase; }
 .eyebrow.center{ justify-content:center; }
+/* Номер раздела как в печатном издании ("01 / ЗНАЁШЬ СЕБЯ?") - та же роль,
+   что у эйбрау-подписи, но добавляет ощущение последовательного журнала/
+   учебника, не просто набора несвязанных блоков (арт-дирекшн 2026-09-10). */
+.eyebrow-num{
+  font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:700;
+  font-size:13px; letter-spacing:.5px; color:var(--gold); opacity:.85; flex-shrink:0;
+  font-variant-numeric: tabular-nums;
+}
 
 h1,h2,h3{ font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:400; color:var(--cream-panel); margin:0; text-wrap:balance; }
 /* h1 — три уровня по контексту, не одна и та же шкала (документировано после
@@ -167,8 +175,16 @@ a{ color:var(--gold-light); }
 .sitenav .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .sitenav .brand{ font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--cream-panel); font-size:1.15rem; text-decoration:none; }
 .sitenav .links{ display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
-.sitenav .links a{ color:var(--cream-soft); text-decoration:none; font-size:.92rem; }
-.sitenav .links a:hover{ color:var(--gold-light); }
+.sitenav .links a:not(.cta){
+  position:relative; color:var(--cream-soft); text-decoration:none; font-size:.92rem; padding-bottom:2px;
+}
+.sitenav .links a:not(.cta)::after{
+  content:''; position:absolute; left:0; right:100%; bottom:0; height:1px; background:var(--gold);
+  transition: right .2s ease;
+}
+.sitenav .links a:not(.cta):hover{ color:var(--gold-light); }
+.sitenav .links a:not(.cta):hover::after{ right:0; }
+.sitenav .links a.cta{ text-decoration:none; }
 .sitenav .links a.cta{ color:var(--cream-panel-text); background:var(--gold); padding:8px 16px; border-radius:999px; font-weight:700; font-size:.85rem; }
 
 /* --- Hero --- */
@@ -181,10 +197,13 @@ a{ color:var(--gold-light); }
 .hero-scene{
   position:absolute; inset:0; z-index:0; pointer-events:none;
   background-size: cover; background-position: right 38%; background-repeat:no-repeat;
-  opacity:.92;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 40%, black 62%);
-  mask-image: linear-gradient(to right, transparent 0%, transparent 40%, black 62%);
+  opacity:.62; filter: saturate(.6) brightness(.82) sepia(.12);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 46%, black 72%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 46%, black 72%);
+  animation: scene-in 2.2s ease-out .15s both;
 }
+@keyframes scene-in{ from{ opacity:0; transform:scale(1.04); } to{ opacity:.62; transform:scale(1); } }
+@media (prefers-reduced-motion: reduce){ .hero-scene{ animation:none; } }
 @media (max-width: 860px){
   .hero-scene{
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%);
@@ -196,10 +215,22 @@ a{ color:var(--gold-light); }
 .trust-icon{ width:15px; height:15px; flex-shrink:0; color:var(--gold); }
 .hero-copy{ min-width:0; }
 .hero-visual{ display:flex; flex-direction:column; align-items:center; text-align:center; }
-.hero-portrait{ position:relative; margin: 0 auto 14px; width:230px; height:230px; }
+.hero-portrait{
+  position:relative; margin: 0 auto 14px; width:230px; height:230px;
+  animation: portrait-in 1s cubic-bezier(.22,.7,.3,1) .5s both;
+}
+@keyframes portrait-in{ from{ opacity:0; transform:scale(.9); } to{ opacity:1; transform:scale(1); } }
+@media (prefers-reduced-motion: reduce){ .hero-portrait{ animation:none; } }
+/* Двойная рамка (тонкое золотое кольцо на расстоянии от снимка) вместо одной
+   сплошной обводки - читается как паспарту старой фотокарточки, а не как
+   типовой web-аватар (арт-дирекшн 2026-09-10). */
+.hero-portrait::before{
+  content:''; position:absolute; inset:-9px; border-radius:50%;
+  border:1px solid var(--border-gold-soft); pointer-events:none;
+}
 .hero-portrait img{
   width:100%; height:100%; border-radius:50%; object-fit:cover; object-position:center 22%; display:block;
-  border:5px solid var(--gold); box-shadow:0 12px 32px rgba(0,0,0,0.35);
+  border:4px solid var(--gold); box-shadow:0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,0,0,.15);
 }
 .hero-portrait-caption{ margin:0; font-size:13px; color:var(--cream-muted); letter-spacing:.3px; display:flex; align-items:center; justify-content:center; gap:8px; text-shadow:0 1px 6px rgba(0,0,0,0.55); }
 
@@ -208,8 +239,10 @@ a{ color:var(--gold-light); }
   background: var(--cream-panel); color: var(--cream-panel-text);
   border: 2px solid var(--gold); border-radius: 16px 16px 16px 4px;
   padding: 10px 14px; text-align:center; box-shadow: var(--card-shadow);
-  transform: rotate(3deg);
+  animation: bubble-in .7s cubic-bezier(.22,.7,.3,1) .95s both;
 }
+@keyframes bubble-in{ from{ opacity:0; transform: rotate(3deg) translateY(8px); } to{ opacity:1; transform: rotate(3deg) translateY(0); } }
+@media (prefers-reduced-motion: reduce){ .speech-bubble{ animation:none; transform:rotate(3deg); } }
 .speech-bubble::after{
   content:''; position:absolute; left:16px; bottom:-9px;
   width:16px; height:16px; background:var(--cream-panel);
