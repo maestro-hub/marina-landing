@@ -301,34 +301,69 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
   z-index:0;
 }
 
-/* Иллюстрированная сцена */
+/* Иллюстрированная сцена (2026-09-10, второй проход - GPT-5.2 через OpenRouter,
+   картинка ближе к референсу Сергея: крупнее, ярче, подписи London/Oxford читаются) */
 .hero-scene{
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-size: cover; background-position: right 38%; background-repeat:no-repeat;
-  opacity:.62;
-  filter: saturate(.62) brightness(.82) sepia(.10) contrast(1.02);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 46%, black 72%);
-  mask-image: linear-gradient(to right, transparent 0%, transparent 46%, black 72%);
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size: cover;
+  background-position: right 82%;
+  opacity:.92;
+  filter: saturate(1.18) brightness(.98) contrast(1.10) sepia(.06);
+  -webkit-mask-image: linear-gradient(
+    to right, transparent 0%, transparent 40%,
+    rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 62%, black 74%, black 100%
+  );
+  mask-image: linear-gradient(
+    to right, transparent 0%, transparent 40%,
+    rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 62%, black 74%, black 100%
+  );
   animation: scene-in 2.2s ease-out .15s both;
 }
-@keyframes scene-in{ from{ opacity:0; transform:scale(1.045); } to{ opacity:.62; transform:scale(1); } }
+.hero-scene::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,
+      rgba(18,8,10,0.98) 0%, rgba(18,8,10,0.92) 18%, rgba(18,8,10,0.78) 30%,
+      rgba(18,8,10,0.45) 42%, rgba(18,8,10,0.18) 54%, rgba(18,8,10,0.00) 66%
+    ),
+    radial-gradient(1200px 680px at 72% 30%, rgba(239,201,135,0.16), transparent 62%),
+    radial-gradient(1100px 720px at 50% 55%, rgba(0,0,0,0.28), transparent 68%),
+    linear-gradient(to top, rgba(10,6,7,0.55) 0%, rgba(10,6,7,0.20) 28%, transparent 55%);
+}
+@keyframes scene-in{ from{ opacity:0; transform:scale(1.045); } to{ opacity:.92; transform:scale(1); } }
 @media (prefers-reduced-motion: reduce){ .hero-scene{ animation:none; } }
 @media (max-width: 860px){
   .hero-scene{
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%);
-    opacity:.28;
+    background-size: cover;
+    background-position: 82% 82%;
+    opacity:.16;
+    filter: saturate(.7) brightness(.82) contrast(1.02) sepia(.08);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%);
   }
+  .hero-scene::before{
+    background:
+      radial-gradient(1000px 620px at 50% 45%, rgba(0,0,0,0.30), transparent 70%),
+      linear-gradient(to top, rgba(10,6,7,0.45) 0%, transparent 60%);
+  }
+  .hero-visual{ transform:none; }
 }
 .hero-scene-fade-top, .hero-scene-fade-bottom{
   position:absolute; left:0; right:0; z-index:0; pointer-events:none;
 }
 .hero-scene-fade-top{
-  top:0; height:130px;
+  top:0; height:110px;
   background: linear-gradient(to bottom, var(--bg-top) 0%, transparent 100%);
 }
 .hero-scene-fade-bottom{
-  bottom:0; height:170px;
+  bottom:0; height:140px;
   background: linear-gradient(to top, var(--bg-mid) 0%, transparent 100%);
 }
 @media (max-width: 860px){
@@ -345,17 +380,22 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
 }
 .trust-icon{ width:15px; height:15px; flex-shrink:0; color:var(--gold); }
 .hero-copy{ min-width:0; }
-.hero-visual{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+.hero-visual{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  position:relative; z-index:2;
+  transform: translateX(-10px);
+}
 
 .hero-portrait{
   position:relative;
   margin: 0 auto 14px;
-  width:230px;
-  height:230px;
+  width:240px;
+  height:240px;
   animation: portrait-in 1s cubic-bezier(.22,.7,.3,1) .5s both;
 }
 @keyframes portrait-in{ from{ opacity:0; transform:scale(.92); } to{ opacity:1; transform:scale(1); } }
 @media (prefers-reduced-motion: reduce){ .hero-portrait{ animation:none; } }
+@media (max-width: 860px){ .hero-portrait{ width:210px; height:210px; } }
 
 .hero-portrait::before{
   content:'';
@@ -402,9 +442,9 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
 .speech-bubble{
   position:relative;
   align-self:flex-end;
-  margin: 0 8px 14px 0;
-  z-index:2;
-  max-width:150px;
+  margin: 0 2px 10px 0;
+  z-index:3;
+  max-width:160px;
   background:
     radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45), transparent 60%),
     var(--cream-panel);
@@ -415,10 +455,11 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
   text-align:center;
   box-shadow: 0 16px 34px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.55);
   animation: bubble-in .7s cubic-bezier(.22,.7,.3,1) .95s both;
-  transform: rotate(3deg);
+  transform: rotate(3deg) translateX(8px);
 }
-@keyframes bubble-in{ from{ opacity:0; transform: rotate(3deg) translateY(10px); } to{ opacity:1; transform: rotate(3deg) translateY(0); } }
+@keyframes bubble-in{ from{ opacity:0; transform: rotate(3deg) translateX(8px) translateY(10px); } to{ opacity:1; transform: rotate(3deg) translateX(8px) translateY(0); } }
 @media (prefers-reduced-motion: reduce){ .speech-bubble{ animation:none; } }
+@media (max-width: 860px){ .speech-bubble{ max-width:150px; transform: rotate(3deg) translateX(4px); } }
 .speech-bubble::after{
   content:'';
   position:absolute;
