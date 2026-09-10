@@ -1649,8 +1649,12 @@ a.credential:hover{
 }
 
 .testimonial-grid{
+  /* Скрины переписки маленького нативного разрешения (~450-490px шириной) -
+     в 4 колонки текст физически нечитаем (Сергей заметил, 2026-09-10). 2
+     колонки дают карточке ширину ~500px, близко к нативному размеру
+     картинки - текст снова читается, не мыльный. */
   display:grid;
-  grid-template-columns:repeat(4, minmax(0, 1fr));
+  grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:22px;
   margin-top:40px;
   align-items:start;
@@ -1658,7 +1662,9 @@ a.credential:hover{
 
 .testimonial-card{
   position:relative;
+  width:100%;
   min-width:0;
+  margin:0;
   padding:16px;
   border:1px solid rgba(90,26,21,0.08);
   border-radius:2px;
