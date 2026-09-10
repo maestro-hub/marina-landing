@@ -211,6 +211,24 @@ a{ color:var(--gold-light); }
     opacity:.28;
   }
 }
+/* Верх и низ сцены раньше обрывались жёстким прямоугольным краем (видно на
+   стыке с nav и со следующей секцией) - две растушёвки в цвет фона страницы
+   поверх картинки решают это без сложного составного mask (Сергей отметил
+   резкие границы, 2026-09-10). */
+.hero-scene-fade-top, .hero-scene-fade-bottom{
+  position:absolute; left:0; right:0; z-index:0; pointer-events:none;
+}
+.hero-scene-fade-top{
+  top:0; height:130px;
+  background: linear-gradient(to bottom, var(--bg-top) 0%, transparent 100%);
+}
+.hero-scene-fade-bottom{
+  bottom:0; height:170px;
+  background: linear-gradient(to top, var(--bg-mid) 0%, transparent 100%);
+}
+@media (max-width: 860px){
+  .hero-scene-fade-top, .hero-scene-fade-bottom{ display:none; }
+}
 .hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns: 1.15fr 0.85fr; gap:36px; align-items:center; text-align:left; }
 .trust-icon{ width:15px; height:15px; flex-shrink:0; color:var(--gold); }
 .hero-copy{ min-width:0; }
