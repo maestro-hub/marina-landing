@@ -334,7 +334,7 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
   pointer-events:none;
   background-repeat:no-repeat;
   background-size: cover;
-  background-position: right 82%;
+  background-position: right 88%;
   opacity:.88;
   filter: saturate(1.12) brightness(.96) contrast(1.08) sepia(.08);
   -webkit-mask-image: linear-gradient(
@@ -457,13 +457,16 @@ a:focus-visible, .btn:focus-visible, button:focus-visible, summary:focus-visible
 .hero-portrait-caption{
   margin:0;
   font-size:12.5px;
-  color:var(--cream-muted);
+  color:var(--cream);
   letter-spacing:.35px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:9px;
-  text-shadow: 0 1px 10px rgba(0,0,0,0.55);
+  padding:5px 12px;
+  border-radius:999px;
+  background: rgba(20,6,6,0.55);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
 }
 
 .speech-bubble{
