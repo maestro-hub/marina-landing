@@ -1293,9 +1293,29 @@ summary:focus-visible{
 
 .pause-stat-body{
   display:grid;
-  grid-template-columns:minmax(0, 1fr) minmax(200px, 280px);
-  gap:52px;
+  grid-template-columns:minmax(0, 1fr) auto minmax(200px, 280px);
+  gap:0 28px;
   align-items:center;
+}
+
+.pause-thread-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:170px;
+}
+
+.pause-thread{
+  width:32px;
+  height:auto;
+  opacity:.7;
+  transform-origin:50% 6%;
+  animation:pause-thread-sway 6s ease-in-out infinite alternate;
+}
+
+@keyframes pause-thread-sway{
+  0%{ transform:rotate(-3deg); }
+  100%{ transform:rotate(3deg); }
 }
 
 .pause-quote{
@@ -2418,6 +2438,10 @@ footer .foot-links{
     margin:0 auto;
   }
 
+  .pause-thread-wrap{
+    display:none;
+  }
+
   .pause-quote{
     max-width:26ch;
     margin:0 auto 24px;
@@ -2733,6 +2757,7 @@ footer .foot-links{
   .watermark,
   .hero-scene,
   .hero-portrait,
+  .pause-thread,
   .speech-bubble{
     animation:none !important;
   }
