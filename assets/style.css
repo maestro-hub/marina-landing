@@ -1287,8 +1287,28 @@ summary:focus-visible{
 }
 
 .pause-stat-photo{
+  position:relative;
   padding:100px 0;
   text-align:left;
+}
+
+.pause-crown{
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  color:var(--cream);
+  opacity:.06;
+  width:clamp(260px, 32vw, 460px);
+  height:auto;
+  bottom:6px;
+  left:2%;
+  transform-origin:50% 85%;
+  animation:pause-crown-float 16s ease-in-out infinite alternate;
+}
+
+@keyframes pause-crown-float{
+  0%{ transform:rotate(-7deg) translateY(0); }
+  100%{ transform:rotate(-3deg) translateY(-10px); }
 }
 
 .pause-stat-body{
@@ -2497,6 +2517,10 @@ footer .foot-links{
     display:none;
   }
 
+  .pause-crown{
+    display:none;
+  }
+
   .pause-quote{
     max-width:26ch;
     margin:0 auto 24px;
@@ -2813,6 +2837,7 @@ footer .foot-links{
   .hero-scene,
   .hero-portrait,
   .pause-string-main,
+  .pause-crown,
   .speech-bubble{
     animation:none !important;
   }
