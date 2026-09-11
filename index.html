@@ -219,13 +219,20 @@
           <span class="pause-number-text">занятий. 20 конкретных звуков британского произношения по порядку - ни одного занятия «про английский вообще».</span>
         </div>
       </div>
-      <div class="pause-thread-wrap" aria-hidden="true">
-        <svg class="pause-thread" viewBox="0 0 60 170">
-          <ellipse cx="30" cy="10" rx="10" ry="3.2" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
-          <path d="M20,10 L40,10 L35,34 L25,34 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
-          <line x1="30" y1="34" x2="30" y2="136" stroke="var(--gold)" stroke-width="1.2"/>
-          <path d="M20,136 L40,136 L35,160 L25,160 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
-          <ellipse cx="30" cy="136" rx="10" ry="3.2" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+      <div class="pause-thread-layer" aria-hidden="true">
+        <svg class="pause-thread-bridge" viewBox="0 0 1000 400" preserveAspectRatio="none">
+          <path class="pause-string pause-string-shadow"
+            d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
+          <path class="pause-string pause-string-main"
+            d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
+          <g class="pause-thread-cup" transform="translate(40,190) rotate(100)">
+            <path d="M-6,0 L6,0 L10,24 L-10,24 Z"/>
+            <ellipse cx="0" cy="24" rx="10" ry="3.2"/>
+          </g>
+          <g class="pause-thread-cup" transform="translate(950,172) rotate(-72)">
+            <path d="M-6,0 L6,0 L10,24 L-10,24 Z"/>
+            <ellipse cx="0" cy="24" rx="10" ry="3.2"/>
+          </g>
         </svg>
       </div>
       <figure class="pause-photo">

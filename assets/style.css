@@ -1292,30 +1292,81 @@ summary:focus-visible{
 }
 
 .pause-stat-body{
+  --stat-gap:52px;
+  position:relative;
   display:grid;
-  grid-template-columns:minmax(0, 1fr) auto minmax(200px, 280px);
-  gap:0 28px;
+  grid-template-columns:minmax(0, 1fr) minmax(200px, 280px);
+  column-gap:var(--stat-gap);
   align-items:center;
 }
 
-.pause-thread-wrap{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:170px;
+.pause-stat-text{
+  grid-column:1;
+  grid-row:1;
+  position:relative;
+  z-index:2;
+  min-width:0;
 }
 
-.pause-thread{
-  width:32px;
-  height:auto;
-  opacity:.7;
-  transform-origin:50% 6%;
-  animation:pause-thread-sway 6s ease-in-out infinite alternate;
+.pause-thread-layer{
+  grid-column:1;
+  grid-row:1;
+  align-self:stretch;
+  position:relative;
+  z-index:1;
+  pointer-events:none;
 }
 
-@keyframes pause-thread-sway{
-  0%{ transform:rotate(-3deg); }
-  100%{ transform:rotate(3deg); }
+.pause-thread-bridge{
+  position:absolute;
+  left:0;
+  top:0;
+  width:calc(100% + var(--stat-gap) + 40px);
+  height:100%;
+  overflow:visible;
+  opacity:.85;
+}
+
+.pause-string{
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+.pause-string-shadow{
+  stroke:rgba(48,10,8,.7);
+  stroke-width:5;
+}
+
+.pause-string-main{
+  stroke:var(--gold);
+  stroke-width:1.5;
+  animation:pause-string-shimmer 6s ease-in-out infinite alternate;
+}
+
+@keyframes pause-string-shimmer{
+  0%{ opacity:.65; }
+  100%{ opacity:1; }
+}
+
+.pause-thread-cup path,
+.pause-thread-cup ellipse{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:1.5;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+/* буквы получают тёмный ореол - нитка визуально ныряет ЗА текст */
+.pause-quote,
+.pause-number-small,
+.pause-number-text{
+  position:relative;
+  text-shadow:
+    0 0 3px rgba(67,17,14,.95),
+    0 0 8px rgba(67,17,14,.7);
 }
 
 .pause-quote{
@@ -1354,6 +1405,10 @@ summary:focus-visible{
 }
 
 .pause-photo{
+  grid-column:2;
+  grid-row:1;
+  position:relative;
+  z-index:3;
   width:100%;
   margin:0;
 }
@@ -2438,7 +2493,7 @@ footer .foot-links{
     margin:0 auto;
   }
 
-  .pause-thread-wrap{
+  .pause-thread-layer{
     display:none;
   }
 
@@ -2757,7 +2812,7 @@ footer .foot-links{
   .watermark,
   .hero-scene,
   .hero-portrait,
-  .pause-thread,
+  .pause-string-main,
   .speech-bubble{
     animation:none !important;
   }
