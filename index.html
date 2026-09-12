@@ -39,7 +39,7 @@
   <div class="hero-scene-fade-top" aria-hidden="true"></div>
   <div class="hero-scene-fade-bottom" aria-hidden="true"></div>
   <div class="watermark" style="top:18px; left:6%; font-size:70px; --dur:10s; --delay:-2s;">iː</div>
-  <div class="watermark" style="bottom:10px; left:14%; font-size:48px; --dur:12s; --delay:-6s;">ɜː</div>
+  <div class="watermark watermark-bottom" style="bottom:10px; right:6%; font-size:48px; --dur:12s; --delay:-6s;">ɜː</div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <div class="eyebrow"><div class="line"></div><span>Интенсив британского произношения · старт совсем скоро</span><div class="line"></div></div>
@@ -88,11 +88,21 @@
       </div>
       <div class="hero-portrait">
         <img src="/assets/img/marina-portrait.jpg" alt="Марина">
-        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Проиграть God Save the King, 15 секунд">
+        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Проиграть God Save the King, 22 секунды">
           <span class="record__disc" aria-hidden="true"></span>
-          <span class="record-tip" aria-hidden="true">God Save the King · 15 сек</span>
+          <span class="egg-tip" aria-hidden="true">God Save the King · 22 сек</span>
         </button>
         <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
+        <button type="button" class="seal" id="queenRecord" aria-pressed="false" aria-label="Проиграть отрывок из коронационной речи Елизаветы II, 1953 год, 15 секунд">
+          <span class="seal__wax" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 18V12L7.5 14.5L12 7L16.5 14.5L20 12V18Z" fill="currentColor"/>
+              <rect x="4" y="18" width="16" height="1.6" rx="0.6" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="egg-tip" aria-hidden="true">Коронационная речь · 1953 · 15 сек</span>
+        </button>
+        <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
       </div>
       <p class="hero-portrait-caption">
         <span class="deco-flag-badge" aria-hidden="true">

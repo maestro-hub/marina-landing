@@ -41,27 +41,40 @@
 })();
 
 (function(){
-  // Грампластинка-пасхалка в хиро - проигрывает 15-сек отрывок гимна Великобритании
-  // (запись US Navy Band, общественное достояние - см. memory проекта). Ручной запуск,
-  // не автоплей. Второй клик или конец отрывка - остановка, диск перестаёт крутиться.
-  var record = document.getElementById('anthemRecord');
-  var audio = document.getElementById('anthemAudio');
-  if(!record || !audio) return;
+  // Две пасхалки в хиро - грампластинка (гимн, US Navy Band, 22 сек) и восковая печать
+  // (коронационная речь Елизаветы II, 1953, обе записи - общественное достояние, см.
+  // memory проекта). Ручной запуск, не автоплей. Второй клик или конец отрывка -
+  // остановка. Если запущена одна пасхалка, а нажали вторую - первая глушится, чтобы
+  // не наложились друг на друга.
+  var eggs = [
+    { btn: document.getElementById('anthemRecord'), audio: document.getElementById('anthemAudio') },
+    { btn: document.getElementById('queenRecord'), audio: document.getElementById('queenAudio') }
+  ].filter(function(e){ return e.btn && e.audio; });
+  if(!eggs.length) return;
 
-  function setPlaying(isPlaying){
-    record.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+  function stopAll(except){
+    eggs.forEach(function(e){
+      if(e !== except && !e.audio.paused){
+        e.audio.pause();
+        e.btn.setAttribute('aria-pressed', 'false');
+      }
+    });
   }
-  record.addEventListener('click', function(){
-    if(audio.paused){
-      audio.currentTime = 0;
-      audio.play().catch(function(){ /* автоплей может быть заблокирован - тихо игнорируем */ });
-      setPlaying(true);
-    } else {
-      audio.pause();
-      setPlaying(false);
-    }
+
+  eggs.forEach(function(egg){
+    egg.btn.addEventListener('click', function(){
+      if(egg.audio.paused){
+        stopAll(egg);
+        egg.audio.currentTime = 0;
+        egg.audio.play().catch(function(){ /* автоплей может быть заблокирован - тихо игнорируем */ });
+        egg.btn.setAttribute('aria-pressed', 'true');
+      } else {
+        egg.audio.pause();
+        egg.btn.setAttribute('aria-pressed', 'false');
+      }
+    });
+    egg.audio.addEventListener('ended', function(){ egg.btn.setAttribute('aria-pressed', 'false'); });
   });
-  audio.addEventListener('ended', function(){ setPlaying(false); });
 })();
 
 (function(){

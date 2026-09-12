@@ -152,6 +152,16 @@ section:not(.hero):not(.curriculum):not(.final-cta)::before{
   will-change:transform;
 }
 
+/* нижний водяной знак раньше сидел под левой колонкой (left:14%) и якорился к низу
+   всей hero-секции - после того как в левой колонке появилась карточка think/sink,
+   секция стала выше именно за счёт неё, и знак начал "протыкать" нижний край карточки.
+   Перенесла его под правую колонку (там высота фиксированная, ниже портрета есть
+   пустое место) и на мобильном, где колонки складываются в одну и это пустое место
+   пропадает, просто прячу - декоративный элемент, без него ничего не теряется. */
+@media (max-width:900px){
+  .watermark-bottom{ display:none; }
+}
+
 @keyframes watermark-float{
   0%{ transform:translate(0, 0) rotate(0deg); }
   50%{ transform:translate(16px, -22px) rotate(4deg); }
@@ -609,6 +619,11 @@ summary:focus-visible{
 
 .hero-portrait{
   position:relative;
+  /* явный z-index обязателен: анимация transform/opacity сама по себе создаёт
+     новый стекинг-контекст, и без этого z-index:4 у .record/.seal внутри
+     работал бы только "локально" - тултип пасхалки при наведении прятался
+     за .speech-bubble (у неё z-index:3), хотя сам диск пластинки был поверх */
+  z-index:5;
   width:216px;
   height:268px;
   margin:0 auto 16px;
@@ -737,11 +752,14 @@ summary:focus-visible{
   margin:28px auto 0;
 }
 
-/* грампластинка-пасхалка с гимном - "брошь" на рамке портрета, не отдельный виджет */
-.record{
+/* грампластинка-пасхалка с гимном - "брошь" на рамке портрета, не отдельный виджет.
+   Вторая пасхалка (.seal, восковая печать с короной - речь Елизаветы II) - того же
+   размера и той же "брошь"-логики, только в нижнем углу портрета, и с фактурой
+   .medallion из блока звуков ниже по странице (та же радиальная подложка), чтобы
+   обе пасхалки читались как одна маленькая система, а не два случайных виджета. */
+.record,
+.seal{
   position:absolute;
-  top:-6px;
-  right:-6px;
   z-index:4;
   width:52px;
   height:52px;
@@ -751,10 +769,22 @@ summary:focus-visible{
   background:var(--bg-mid);
   cursor:pointer;
   box-shadow:0 6px 16px rgba(20,4,4,0.4);
+  transition:transform 200ms ease, box-shadow 200ms ease;
 }
-.record:focus-visible{
+.record{ top:-6px; right:-6px; }
+.seal{ bottom:4px; left:-6px; }
+.record:focus-visible,
+.seal:focus-visible{
   outline:2px solid var(--gold-light);
   outline-offset:3px;
+}
+@media (hover:hover){
+  .record:hover,
+  .seal:hover{
+    transform:scale(1.1) rotate(-6deg);
+    box-shadow:0 10px 22px rgba(20,4,4,0.5), 0 0 0 4px rgba(201,162,94,0.22);
+  }
+  .seal:hover{ transform:scale(1.1) rotate(6deg); }
 }
 .record__disc{
   display:block;
@@ -769,12 +799,41 @@ summary:focus-visible{
 }
 .record[aria-pressed="true"] .record__disc{ animation-play-state:running; }
 @keyframes record-spin{ to{ transform:rotate(360deg); } }
-.record-tip{
+.seal__wax{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  /* неровный контур вместо идеального круга - иначе на глаз не отличить
+     от заготовки .medallion, а печать должна читаться как воск, не кнопка */
+  border-radius:46% 54% 52% 48% / 52% 47% 53% 48%;
+  color:rgba(246,238,226,0.55);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(232,200,136,0.35), transparent 52%),
+    radial-gradient(circle at 50% 55%, #7a3228, #3e100d);
+  /* внутренняя тень со стороны короны + блик с другого края - имитация
+     оттиска, вдавленного в воск, а не наклеенной сверху иконки */
+  box-shadow:inset -2px -2px 4px rgba(0,0,0,0.35), inset 2px 2px 3px rgba(255,255,255,0.12);
+}
+.seal__wax svg{
+  width:54%;
+  height:54%;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,0.5)) drop-shadow(0 -1px 0 rgba(255,255,255,0.08));
+}
+.seal[aria-pressed="true"] .seal__wax{
+  animation:seal-glow 1.6s ease-in-out infinite;
+}
+@keyframes seal-glow{
+  0%, 100%{ box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); }
+  50%{ box-shadow:inset 0 1px 0 rgba(255,255,255,0.16), 0 0 10px 2px rgba(232,200,136,0.45); }
+}
+.egg-tip{
   position:absolute;
   bottom:calc(100% + 8px);
   right:0;
   width:max-content;
-  max-width:150px;
+  max-width:170px;
   padding:6px 10px;
   border:1px solid var(--border-gold-soft);
   border-radius:8px;
@@ -788,13 +847,19 @@ summary:focus-visible{
   transition:opacity 160ms ease, transform 160ms ease;
   pointer-events:none;
 }
-.record:hover .record-tip,
-.record:focus-visible .record-tip{ opacity:1; transform:translateY(0); }
+.seal .egg-tip{ right:auto; left:0; bottom:auto; top:calc(100% + 8px); }
+.record:hover .egg-tip,
+.record:focus-visible .egg-tip,
+.seal:hover .egg-tip,
+.seal:focus-visible .egg-tip{ opacity:1; transform:translateY(0); }
 @media (max-width:720px){
-  .record{ width:46px; height:46px; }
+  .record,
+  .seal{ width:46px; height:46px; }
 }
 @media (prefers-reduced-motion: reduce){
   .record__disc{ animation:none; }
+  .record:hover, .seal:hover{ transform:none; }
+  .seal[aria-pressed="true"] .seal__wax{ animation:none; }
 }
 
 /* карточка "think vs sink" - маленький живой образец продукта, не тест с баллами */
@@ -867,7 +932,7 @@ summary:focus-visible{
   .sc-btn:not(:disabled):hover{ border-color:var(--border-gold); background:rgba(201,162,94,0.07); }
 }
 .sc-btn:not(:disabled):active{ transform:translateY(1px); }
-.sc-btn:disabled{ opacity:.45; cursor:default; }
+.sc-btn:disabled{ opacity:.7; cursor:default; }
 .sc-btn:focus-visible{ outline:2px solid var(--gold-light); outline-offset:3px; }
 .sc-btn[aria-pressed="true"]{ border-color:var(--border-gold); background:rgba(201,162,94,0.1); }
 .sc-play{ width:100%; justify-content:center; margin-bottom:16px; }
