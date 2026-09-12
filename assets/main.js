@@ -41,14 +41,20 @@
 })();
 
 (function(){
-  // Две пасхалки в хиро - грампластинка (гимн, US Navy Band, 22 сек) и восковая печать
+  // Три пасхалки в хиро - грампластинка (гимн, US Navy Band, 22 сек), восковая печать
   // (коронационная речь Елизаветы II, 1953, обе записи - общественное достояние, см.
-  // memory проекта). Ручной запуск, не автоплей. Второй клик или конец отрывка -
-  // остановка. Если запущена одна пасхалка, а нажали вторую - первая глушится, чтобы
-  // не наложились друг на друга.
+  // memory проекта) и медаль (стомп-клэп ритм). Про медаль отдельно: попросили "песню
+  // Queen (we will rock you)" - настоящую запись группы использовать нельзя, это
+  // действующее коммерческое авторское право, не что-то истёкшее как гимн или речь
+  // 1953 года. Синтезировала свой стомп-стомп-клэп ритм (ffmpeg, синус+шум, без
+  // мелодии и вокала песни) - тот же дух, без чужих прав. Никаких подписей при
+  // наведении ни у одной из трёх - только реакция (см. CSS), что внутри - сюрприз.
+  // Ручной запуск, не автоплей. Если играет одна пасхалка, а нажали другую - первая
+  // глушится, чтобы не наложились друг на друга.
   var eggs = [
     { btn: document.getElementById('anthemRecord'), audio: document.getElementById('anthemAudio') },
-    { btn: document.getElementById('queenRecord'), audio: document.getElementById('queenAudio') }
+    { btn: document.getElementById('queenRecord'), audio: document.getElementById('queenAudio') },
+    { btn: document.getElementById('beatRecord'), audio: document.getElementById('beatAudio') }
   ].filter(function(e){ return e.btn && e.audio; });
   if(!eggs.length) return;
 
@@ -85,6 +91,7 @@
 
   var playBtn = document.getElementById('scPlay');
   var answers = card.querySelectorAll('.sc-answer');
+  var teaser = document.getElementById('scTeaser');
   var feedback = document.getElementById('scFeedback');
   var feedbackText = document.getElementById('scFeedbackText');
   var audioThink = document.getElementById('scAudioThink');
@@ -120,6 +127,7 @@
       feedbackText.textContent = (chose === target)
         ? 'Да, здесь звучало «' + target + '».'
         : 'Эти звуки легко спутать. Здесь звучало «' + target + '».';
+      if(teaser) teaser.hidden = true;
       feedback.hidden = false;
     });
   });

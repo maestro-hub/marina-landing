@@ -54,32 +54,6 @@
         <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.3l-5.9 3.2 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>метод, по которому Марина сама ставила произношение 4 года</li>
         <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4 3 5-6 5 6 4-3-1.5 10h-15z"/><path d="M6 21h12"/></svg>«Премиум» - только 5 мест</li>
       </ul>
-
-      <div class="minpair-card" id="soundCard">
-        <div class="minpair-card-head">
-          <h3>Почувствуйте разницу</h3>
-          <span class="minpair-card-tag">20 сек</span>
-        </div>
-        <button type="button" class="sc-btn sc-play" id="scPlay">▶ Послушать слово</button>
-        <div class="sc-question">
-          <p>Какое слово прозвучало?</p>
-          <div class="sc-answers">
-            <button type="button" class="sc-btn sc-answer" data-word="think" disabled aria-pressed="false">think <span class="ipa">/θɪŋk/</span></button>
-            <button type="button" class="sc-btn sc-answer" data-word="sink" disabled aria-pressed="false">sink <span class="ipa">/sɪŋk/</span></button>
-          </div>
-        </div>
-        <div class="sc-feedback" id="scFeedback" aria-live="polite" hidden>
-          <p class="sc-feedback-text" id="scFeedbackText"></p>
-          <p class="sc-explain">Для /θ/ кончик языка слегка между зубами. Для /s/ - остаётся за зубами.</p>
-          <div class="sc-compare">
-            <button type="button" class="sc-btn sc-mini" data-word="think">▶ think</button>
-            <button type="button" class="sc-btn sc-mini" data-word="sink">▶ sink</button>
-          </div>
-          <p class="sc-bridge">На интенсиве вы присылаете свою запись, а Марина объясняет, что и как поправить. <a href="#program">Как проходят 15 занятий →</a></p>
-        </div>
-        <audio id="scAudioThink" src="/assets/audio/word-think.mp3" preload="none"></audio>
-        <audio id="scAudioSink" src="/assets/audio/word-sink.mp3" preload="none"></audio>
-      </div>
     </div>
     <div class="hero-visual">
       <div class="speech-bubble" aria-hidden="true">
@@ -88,21 +62,27 @@
       </div>
       <div class="hero-portrait">
         <img src="/assets/img/marina-portrait.jpg" alt="Марина">
-        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Проиграть God Save the King, 22 секунды">
-          <span class="record__disc" aria-hidden="true"></span>
-          <span class="egg-tip" aria-hidden="true">God Save the King · 22 сек</span>
-        </button>
+        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Скрытая пасхалка на портрете: проиграть God Save the King, 22 секунды"></button>
         <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
-        <button type="button" class="seal" id="queenRecord" aria-pressed="false" aria-label="Проиграть отрывок из коронационной речи Елизаветы II, 1953 год, 15 секунд">
+        <button type="button" class="seal" id="queenRecord" aria-pressed="false" aria-label="Скрытая пасхалка на портрете: проиграть отрывок коронационной речи Елизаветы II, 1953 год, 15 секунд">
           <span class="seal__wax" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 18V12L7.5 14.5L12 7L16.5 14.5L20 12V18Z" fill="currentColor"/>
               <rect x="4" y="18" width="16" height="1.6" rx="0.6" fill="currentColor"/>
             </svg>
           </span>
-          <span class="egg-tip" aria-hidden="true">Коронационная речь · 1953 · 15 сек</span>
         </button>
         <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
+        <button type="button" class="medal" id="beatRecord" aria-pressed="false" aria-label="Скрытая пасхалка на портрете: проиграть ритм в стиле стадионного стомп-клэпа">
+          <span class="medal__face" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="13" width="3" height="7" rx="1" fill="currentColor"/>
+              <rect x="10.5" y="7" width="3" height="13" rx="1" fill="currentColor"/>
+              <rect x="17" y="10" width="3" height="10" rx="1" fill="currentColor"/>
+            </svg>
+          </span>
+        </button>
+        <audio id="beatAudio" src="/assets/audio/stomp-clap.mp3" preload="none"></audio>
       </div>
       <p class="hero-portrait-caption">
         <span class="deco-flag-badge" aria-hidden="true">
@@ -116,6 +96,42 @@
         </span>
         Курс ведёт Марина Маркова, фонетист
       </p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="minpair-card" id="soundCard">
+      <div class="minpair-col minpair-question">
+        <div class="minpair-card-head">
+          <h3>Почувствуйте разницу</h3>
+          <span class="minpair-card-tag">20 сек</span>
+        </div>
+        <button type="button" class="sc-btn sc-play" id="scPlay">▶ Послушать слово</button>
+        <div class="sc-question">
+          <p>Какое слово прозвучало?</p>
+          <div class="sc-answers">
+            <button type="button" class="sc-btn sc-answer" data-word="think" disabled aria-pressed="false">think <span class="ipa">/θɪŋk/</span></button>
+            <button type="button" class="sc-btn sc-answer" data-word="sink" disabled aria-pressed="false">sink <span class="ipa">/sɪŋk/</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="minpair-col minpair-result">
+        <div class="sc-teaser" id="scTeaser">
+          <span class="sc-teaser-ipa" aria-hidden="true">θ<i>/</i>s</span>
+          <p>Не тест на балл, а тренировка слуха - именно такие пары звуков Марина ставит на курсе один за другим.</p>
+        </div>
+        <div class="sc-feedback" id="scFeedback" aria-live="polite" hidden>
+          <p class="sc-feedback-text" id="scFeedbackText"></p>
+          <p class="sc-explain">Для /θ/ кончик языка слегка между зубами. Для /s/ - остаётся за зубами.</p>
+          <div class="sc-compare">
+            <button type="button" class="sc-btn sc-mini" data-word="think">▶ think</button>
+            <button type="button" class="sc-btn sc-mini" data-word="sink">▶ sink</button>
+          </div>
+          <p class="sc-bridge">На интенсиве вы присылаете свою запись, а Марина объясняет, что и как поправить. <a href="#program">Как проходят 15 занятий →</a></p>
+        </div>
+      </div>
+      <audio id="scAudioThink" src="/assets/audio/word-think.mp3" preload="none"></audio>
+      <audio id="scAudioSink" src="/assets/audio/word-sink.mp3" preload="none"></audio>
     </div>
   </div>
 </section>
