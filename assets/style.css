@@ -247,10 +247,17 @@ section:not(.hero):not(.curriculum):not(.final-cta)::before{
 }
 
 .eyebrow{
+  position:relative;
   display:flex;
   align-items:center;
   gap:16px;
-  margin:0 0 20px;
+  margin:0 0 14px;
+  /* печать (см. .seal ниже) вынута из потока - как 5-й flex-элемент со своей
+     шириной+gap она толкала строку за пределы .hero-copy: длинный nowrap-текст
+     eyebrow не сжимается (flex-item min-width:auto - классический оверфлоу),
+     а .line{flex:1 1 0} только всё усугубляли, пытаясь дотянуть до заданного
+     gap. Абсолютное позиционирование ничего не потребляет из ширины строки. */
+  padding-right:34px;
 }
 
 .eyebrow .line{
@@ -515,7 +522,7 @@ summary:focus-visible{
 
 /* --- Hero --- */
 .hero{
-  padding:36px 0 72px;
+  padding:32px 0 44px;
   text-align:center;
 }
 
@@ -539,8 +546,11 @@ summary:focus-visible{
   background-repeat:no-repeat;
   background-size:cover;
   background-position:right 88%;
-  opacity:.88;
-  filter:saturate(1.12) brightness(.96) contrast(1.08) sepia(.08);
+  /* было .88/saturate(1.12) - Биг-Бен с чашкой и книгой конкурировали за внимание
+     с портретом (второй "центр" композиции, отдельный от Марины). Слегка сдержаннее,
+     чтобы лицо и подпись оставались главным, а сцена читалась как фон, не как герой. */
+  opacity:.76;
+  filter:saturate(0.94) brightness(.92) contrast(1.04) sepia(.1);
   -webkit-mask-image:linear-gradient(to right, transparent 0%, transparent 38%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.9) 62%, black 76%, black 100%);
   mask-image:linear-gradient(to right, transparent 0%, transparent 38%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.9) 62%, black 76%, black 100%);
   animation:scene-in 2.4s ease-out .1s both;
@@ -597,6 +607,20 @@ summary:focus-visible{
 .hero-copy{
   min-width:0;
 }
+/* схематичная гравюра артикуляции /θ/ (положение языка для think) - сама объясняет
+   продукт и подводит к карточке think/sink ниже. В нормальном потоке над eyebrow,
+   не абсолютным позиционированием поверх текста - тот же гутter на узких экранах
+   не гарантирует свободное место сбоку, а тут гарантированно ничего не перекроет. */
+.articulation-diagram{
+  display:block;
+  width:56px;
+  height:auto;
+  margin:0 0 8px;
+  opacity:.6;
+}
+@media (max-width:900px){
+  .articulation-diagram{ margin:0 auto 16px; }
+}
 
 .hero-visual{
   position:relative;
@@ -607,6 +631,40 @@ summary:focus-visible{
   justify-content:center;
   min-width:0;
   text-align:center;
+}
+/* фоновая сцена несёт запечённый в картинку курсивный леттеринг "Better English
+   Brighter You" прямо над портретом - на реальном экране он спорит с речевым
+   пузырём и с бронзовой медалью на портрете (жалоба хозяина, скрин с телефона).
+   Пробовала вычистить сам файл через AI-редактирование (gpt-image-1, inpaint) -
+   дважды получила артефакты (испорченный текст карты, паразитный "росчерк" в
+   небе), это хуже исходной проблемы. Вместо правки картинки притушила леттеринг
+   тем же приёмом, что уже даёт .hero-scene::before - тёмная виньетка поверх сцены
+   именно в этой зоне, лежит ниже пузыря/портрета по порядку отрисовки. */
+.hero-visual::before{
+  content:'';
+  position:absolute;
+  top:-140px;
+  left:-15%;
+  right:-40%;
+  height:380px;
+  z-index:0;
+  pointer-events:none;
+  background:radial-gradient(closest-side, rgba(10,6,7,0.86), rgba(10,6,7,0.6) 55%, rgba(10,6,7,0.22) 75%, transparent 88%);
+}
+@media (max-width:900px){
+  /* На мобильном сцена и так уже сильно притушена отдельным правилом ниже
+     (.hero-scene на max-width:860px - opacity .14 + маска) - леттеринг там
+     бледный, но всё ещё читается как текст на равномерно тёмном фоне.
+     Это не то наложение, на которое жаловался Сергей (у него на фото был
+     десктоп) - тут просто не даю виньетке от десктопной версии тянуться
+     не на то место. */
+  .hero-visual::before{
+    top:-24px;
+    left:-10%;
+    right:-10%;
+    height:200px;
+    background:radial-gradient(closest-side, rgba(10,6,7,0.55), transparent 80%);
+  }
 }
 
 .trust-icon{
@@ -752,17 +810,18 @@ summary:focus-visible{
   margin:28px auto 0;
 }
 
-/* Три пасхалки-"броши" на рамке портрета - пластинка (гимн), восковая печать
-   (речь Елизаветы II) и медаль (стомп-клэп ритм). Намеренно без подписи при
-   наведении - только реакция (масштаб/наклон/свечение), что это и зачем
-   человек узнаёт только кликнув. Один клик - глушит остальные две. */
+/* Три пасхалки - пластинка (гимн), восковая печать (речь Елизаветы II) и медаль
+   (стомп-клэп ритм) - раньше все три сидели на одном портрете, тесно и одинаково
+   оформленные. Разнесены по разным, устойчивым частям хиро (не по фоновой картинке -
+   та масштабируется по-разному на разных экранах, пришпиливать к конкретному пикселю
+   сцены ненадёжно): медаль осталась на портрете (единственная брошь), печать переехала
+   к концу декоративной линии в eyebrow слева (как сургуч, которым запечатывают письмо),
+   пластинка - в подпись под портретом, вторым значком рядом с флагом. Намеренно без
+   подписи при наведении - только реакция (масштаб/наклон/свечение), что это и зачем
+   узнаётся по клику. Один клик - глушит остальные две (см. main.js). */
 .record,
 .seal,
 .medal{
-  position:absolute;
-  z-index:4;
-  width:52px;
-  height:52px;
   padding:0;
   border:1px solid var(--border-gold);
   border-radius:50%;
@@ -770,10 +829,11 @@ summary:focus-visible{
   cursor:pointer;
   box-shadow:0 6px 16px rgba(20,4,4,0.4);
   transition:transform 200ms ease, box-shadow 200ms ease;
+  flex-shrink:0;
 }
-.record{ top:-6px; right:-6px; }
-.seal{ bottom:4px; left:-6px; }
-.medal{ top:-6px; left:-6px; }
+.medal{ position:absolute; z-index:4; bottom:4px; left:-6px; width:52px; height:52px; }
+.record{ position:relative; width:26px; height:26px; }
+.seal{ position:absolute; right:0; top:50%; transform:translateY(-50%); width:26px; height:26px; }
 .record:focus-visible,
 .seal:focus-visible,
 .medal:focus-visible{
@@ -784,21 +844,31 @@ summary:focus-visible{
   .record:hover,
   .seal:hover,
   .medal:hover{
-    transform:scale(1.1) rotate(-6deg);
+    transform:scale(1.16) rotate(-6deg);
     box-shadow:0 10px 22px rgba(20,4,4,0.5), 0 0 0 4px rgba(201,162,94,0.22);
   }
-  .seal:hover{ transform:scale(1.1) rotate(6deg); }
+  .seal:hover{ transform:translateY(-50%) scale(1.16) rotate(6deg); }
 }
 .record__disc{
   display:block;
+  position:relative;
   width:100%;
   height:100%;
   border-radius:50%;
+  overflow:hidden;
   background:
     radial-gradient(circle, var(--bg-bottom) 0 3%, transparent 4%),
     radial-gradient(circle, var(--accent-warm) 0 20%, var(--gold) 21% 22%, transparent 23%),
     repeating-radial-gradient(circle, #171111 0 2px, #251c1b 2.5px 3px);
   animation:record-spin 4.5s linear infinite paused;
+}
+/* тёплый блик по диагонали - без него плоские концентрические кольца читаются
+   как абстрактный узор, с ним - именно как фото пластинки под светом */
+.record__disc::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,241,214,0.4) 46%, transparent 60%);
 }
 .record[aria-pressed="true"] .record__disc{ animation-play-state:running; }
 @keyframes record-spin{ to{ transform:rotate(360deg); } }
@@ -857,13 +927,12 @@ summary:focus-visible{
 .medal[aria-pressed="true"] .medal__face svg rect:nth-child(3){ animation-delay:.24s; }
 @keyframes medal-bounce{ from{ transform:scaleY(0.5); } to{ transform:scaleY(1); } }
 @media (max-width:720px){
-  .record,
-  .seal,
   .medal{ width:46px; height:46px; }
 }
 @media (prefers-reduced-motion: reduce){
   .record__disc{ animation:none; }
-  .record:hover, .seal:hover, .medal:hover{ transform:none; }
+  .record:hover, .medal:hover{ transform:none; }
+  .seal:hover{ transform:translateY(-50%); }
   .seal[aria-pressed="true"] .seal__wax{ animation:none; }
   .medal[aria-pressed="true"] .medal__face svg rect{ animation:none; }
 }
@@ -878,9 +947,9 @@ summary:focus-visible{
 .minpair-card{
   position:relative;
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1.3fr .7fr;
   gap:0;
-  margin:56px 0 0;
+  margin:32px 0 0;
   border:1px solid var(--border-gold-soft);
   border-radius:var(--radius-card-lg);
   background:var(--panel);
@@ -894,7 +963,7 @@ summary:focus-visible{
 }
 .minpair-col{
   position:relative;
-  padding:32px;
+  padding:22px 26px;
 }
 .minpair-question{ border-right:1px solid var(--hairline); }
 @media (max-width:760px){
@@ -944,14 +1013,15 @@ summary:focus-visible{
   align-items:baseline;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:14px;
+  margin-bottom:8px;
 }
 .minpair-card-head h3{
   margin:0;
   font-family:'Playfair Display',Georgia,serif;
   font-style:italic;
   font-weight:400;
-  font-size:1.35rem;
+  font-size:1.15rem;
+  line-height:1.25;
   color:var(--cream);
 }
 .minpair-card-tag{
@@ -967,8 +1037,8 @@ summary:focus-visible{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  min-height:44px;
-  padding:10px 16px;
+  min-height:40px;
+  padding:8px 16px;
   border:1px solid var(--border-gold-soft);
   border-radius:10px;
   background:rgba(246,238,226,0.025);
@@ -985,7 +1055,7 @@ summary:focus-visible{
 .sc-btn:disabled{ opacity:.7; cursor:default; }
 .sc-btn:focus-visible{ outline:2px solid var(--gold-light); outline-offset:3px; }
 .sc-btn[aria-pressed="true"]{ border-color:var(--border-gold); background:rgba(201,162,94,0.1); }
-.sc-play{ width:100%; justify-content:center; margin-bottom:16px; }
+.sc-play{ width:100%; justify-content:center; margin-bottom:10px; }
 .sc-question p{
   margin:0 0 10px;
   font-family:'Inter',sans-serif;
@@ -993,7 +1063,7 @@ summary:focus-visible{
   color:var(--cream-muted);
 }
 .sc-answers{ display:flex; gap:10px; flex-wrap:wrap; }
-.sc-answers .sc-btn{ flex:1 1 140px; justify-content:center; }
+.sc-answers .sc-btn{ flex:1 1 140px; justify-content:center; border-color:var(--border-gold); background:rgba(201,162,94,0.06); font-weight:600; }
 .sc-answers .ipa{
   margin-left:6px;
   font-family:'Playfair Display',Georgia,serif;
@@ -1041,9 +1111,9 @@ summary:focus-visible{
 .trust-row{
   display:grid;
   grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:16px 22px;
-  margin:28px 0 0;
-  padding:16px 0 0;
+  gap:12px 22px;
+  margin:18px 0 0;
+  padding:12px 0 0;
   list-style:none;
   border-top:1px solid rgba(201,162,94,0.18);
 }
@@ -1061,13 +1131,13 @@ summary:focus-visible{
 
 .hero .lead{
   max-width:46ch;
-  margin:18px 0 0;
+  margin:12px 0 0;
 }
 
 .hero .cta-row{
   justify-content:flex-start;
   align-items:center;
-  margin-top:26px;
+  margin-top:18px;
 }
 
 .hero .eyebrow{
