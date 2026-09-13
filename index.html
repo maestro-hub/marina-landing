@@ -40,6 +40,7 @@
   <div class="hero-scene-fade-bottom" aria-hidden="true"></div>
   <div class="watermark" style="top:18px; left:6%; font-size:70px; --dur:10s; --delay:-2s;">iː</div>
   <div class="watermark watermark-bottom" style="bottom:10px; right:6%; font-size:48px; --dur:12s; --delay:-6s;">ɜː</div>
+
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <svg class="articulation-diagram" viewBox="0 0 100 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -49,9 +50,22 @@
         <path d="M50 37Q63 32 71 39" stroke="var(--accent-warm)" stroke-width="2.8" stroke-linecap="round"/>
         <path d="M75 33Q88 30 94 23" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round" opacity=".65"/>
         <path d="M90 21l4 2-3 5" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round" opacity=".65"/>
-        <text x="2" y="70" font-family="Playfair Display, Georgia, serif" font-style="italic" font-size="18" fill="var(--gold)">θ</text>
+        <text x="2" y="70" font-family="Playfair Display, Georgia, serif" font-style="italic" font-size="18" fill="var(--gold)">iː</text>
       </svg>
-      <div class="eyebrow"><div class="line"></div><span>Интенсив британского произношения · старт совсем скоро</span><div class="line"></div>
+
+      <div class="eyebrow">
+        <div class="line"></div>
+        <span>Интенсив британского произношения · старт совсем скоро</span>
+        <div class="line"></div>
+      </div>
+
+      <h1>Твой английский <em>умнее</em> твоего произношения</h1>
+
+      <p class="lead">Короткие видео, тренировка на словах и личный разбор твоего произношения от Марины. Звук за звуком - вместо «английского вообще».</p>
+
+      <div class="hero-sound-tools" aria-label="Скрытые аудио-пасхалки">
+        <span class="hero-sound-tools__label">Нажми на символы</span>
+
         <button type="button" class="seal" id="queenRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть отрывок коронационной речи Елизаветы II, 1953 год, 15 секунд">
           <span class="seal__wax" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,28 +74,8 @@
             </svg>
           </span>
         </button>
-        <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
-      </div>
-      <h1>Твой английский <em>умнее</em> твоего произношения</h1>
-      <p class="lead">Короткие видео, тренировка на словах и личный разбор твоего произношения от Марины. Звук за звуком - вместо «английского вообще».</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#tariffs">Смотреть тарифы</a>
-        <a class="text-cta" href="https://t.me/marina_online_english" target="_blank" rel="noopener">Канал Марины в Telegram <span class="arrow">→</span></a>
-      </div>
-      <ul class="trust-row">
-        <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15.5a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2z"/><path d="M3 15.5a2 2 0 0 0 2 2h1v-5H5a2 2 0 0 0-2 2z"/></svg>2 100+ подписчиков канала о британской фонетике</li>
-        <li><a href="#testimonials" style="display:flex;align-items:flex-start;gap:8px;color:inherit;text-decoration:none;"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.3l-5.9 3.2 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><span style="text-decoration:underline;text-underline-offset:2px;">Посмотреть примеры разбора →</span></a></li>
-        <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4 3 5-6 5 6 4-3-1.5 10h-15z"/><path d="M6 21h12"/></svg>«Премиум» - только 5 мест</li>
-      </ul>
-    </div>
-    <div class="hero-visual">
-      <div class="speech-bubble" aria-hidden="true">
-        <span class="sb-text">Hi, how are you?</span>
-        <span class="sb-ipa">/haɪ ˌhaʊ ɑː juː/</span>
-      </div>
-      <div class="hero-portrait">
-        <img src="/assets/img/marina-portrait.jpg" alt="Марина">
-        <button type="button" class="medal" id="beatRecord" aria-pressed="false" aria-label="Скрытая пасхалка на портрете: проиграть ритм в стиле стадионного стомп-клэпа">
+
+        <button type="button" class="medal" id="beatRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть ритм в стиле стадионного стомп-клэпа">
           <span class="medal__face" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="4" y="13" width="3" height="7" rx="1" fill="currentColor"/>
@@ -90,8 +84,53 @@
             </svg>
           </span>
         </button>
+
+        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть God Save the King, 22 секунды">
+          <span class="record__disc" aria-hidden="true"></span>
+        </button>
+
+        <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
         <audio id="beatAudio" src="/assets/audio/stomp-clap.mp3" preload="none"></audio>
+        <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
       </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#tariffs">Смотреть тарифы</a>
+        <a class="text-cta" href="https://t.me/marina_online_english" target="_blank" rel="noopener">Канал Марины в Telegram <span class="arrow">→</span></a>
+      </div>
+
+      <div class="hero-proof-row" aria-label="Что будет на интенсиве">
+        <div class="hero-proof">
+          <strong>15</strong>
+          <span>занятий<br>по порядку</span>
+        </div>
+        <div class="hero-proof">
+          <strong>20</strong>
+          <span>звуков<br>британского RP</span>
+        </div>
+        <div class="hero-proof">
+          <strong>10–15</strong>
+          <span>минут<br>в день</span>
+        </div>
+      </div>
+
+      <ul class="trust-row">
+        <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15.5a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2z"/><path d="M3 15.5a2 2 0 0 0 2 2h1v-5H5a2 2 0 0 0-2 2z"/></svg>2 100+ подписчиков канала о британской фонетике</li>
+        <li><a href="#testimonials" style="display:flex;align-items:flex-start;gap:8px;color:inherit;text-decoration:none;"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.3l-5.9 3.2 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><span style="text-decoration:underline;text-underline-offset:2px;">Посмотреть примеры разбора →</span></a></li>
+        <li><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4 3 5-6 5 6 4-3-1.5 10h-15z"/><path d="M6 21h12"/></svg>«Премиум» - только 5 мест</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual">
+      <div class="speech-bubble" aria-hidden="true">
+        <span class="sb-text">Hi, how are you?</span>
+        <span class="sb-ipa">/haɪ ˌhaʊ ɑː juː/</span>
+      </div>
+
+      <div class="hero-portrait">
+        <img src="/assets/img/marina-portrait.jpg" alt="Марина">
+      </div>
+
       <p class="hero-portrait-caption">
         <span class="deco-flag-badge" aria-hidden="true">
           <svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
@@ -103,10 +142,6 @@
           </svg>
         </span>
         Курс ведёт Марина Маркова, фонетист
-        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть God Save the King, 22 секунды">
-          <span class="record__disc" aria-hidden="true"></span>
-        </button>
-        <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
       </p>
     </div>
   </div>
@@ -115,35 +150,40 @@
     <div class="minpair-card" id="soundCard">
       <div class="minpair-col minpair-question">
         <div class="minpair-card-head">
-          <h3>Слышишь разницу между think и sink?</h3>
+          <h3>Слышишь разницу между ship и sheep?</h3>
           <span class="minpair-card-tag">20 сек</span>
         </div>
+
         <button type="button" class="sc-btn sc-play" id="scPlay">▶ Послушать и выбрать слово</button>
+
         <div class="sc-question">
           <p>Какое слово прозвучало?</p>
           <div class="sc-answers">
-            <button type="button" class="sc-btn sc-answer" data-word="think" disabled aria-pressed="false">think <span class="ipa">/θɪŋk/</span></button>
-            <button type="button" class="sc-btn sc-answer" data-word="sink" disabled aria-pressed="false">sink <span class="ipa">/sɪŋk/</span></button>
+            <button type="button" class="sc-btn sc-answer" data-word="ship" disabled aria-pressed="false">ship <span class="ipa">/ʃɪp/</span></button>
+            <button type="button" class="sc-btn sc-answer" data-word="sheep" disabled aria-pressed="false">sheep <span class="ipa">/ʃiːp/</span></button>
           </div>
         </div>
       </div>
+
       <div class="minpair-col minpair-result">
         <div class="sc-teaser" id="scTeaser">
-          <span class="sc-teaser-ipa" aria-hidden="true">θ<i>/</i>s</span>
-          <p>Такие пары звуков тренируем на курсе.</p>
+          <span class="sc-teaser-ipa" aria-hidden="true">ɪ<i>/</i>iː</span>
+          <p>Такие пары гласных тренируем на курсе.</p>
         </div>
+
         <div class="sc-feedback" id="scFeedback" aria-live="polite" hidden>
           <p class="sc-feedback-text" id="scFeedbackText"></p>
-          <p class="sc-explain">Для /θ/ кончик языка слегка между зубами. Для /s/ - остаётся за зубами.</p>
+          <p class="sc-explain">В ship гласный короткий и более расслабленный: /ɪ/. В sheep гласный длиннее и напряжённее: /iː/. Для русскоязычных это не одна «и», а два разных звука.</p>
           <div class="sc-compare">
-            <button type="button" class="sc-btn sc-mini" data-word="think">▶ think</button>
-            <button type="button" class="sc-btn sc-mini" data-word="sink">▶ sink</button>
+            <button type="button" class="sc-btn sc-mini" data-word="ship">▶ ship /ʃɪp/</button>
+            <button type="button" class="sc-btn sc-mini" data-word="sheep">▶ sheep /ʃiːp/</button>
           </div>
           <p class="sc-bridge">На интенсиве вы присылаете свою запись, а Марина объясняет, что и как поправить. <a href="#program">Как проходят 15 занятий →</a></p>
         </div>
       </div>
-      <audio id="scAudioThink" src="/assets/audio/word-think.mp3" preload="none"></audio>
-      <audio id="scAudioSink" src="/assets/audio/word-sink.mp3" preload="none"></audio>
+
+      <audio id="scAudioShip" src="/assets/audio/word-ship.mp3" preload="none"></audio>
+      <audio id="scAudioSheep" src="/assets/audio/word-sheep.mp3" preload="none"></audio>
     </div>
   </div>
 </section>
@@ -299,10 +339,8 @@
       </div>
       <div class="pause-thread-layer" aria-hidden="true">
         <svg class="pause-thread-bridge" viewBox="0 0 1000 400" preserveAspectRatio="none">
-          <path class="pause-string pause-string-shadow"
-            d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
-          <path class="pause-string pause-string-main"
-            d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
+          <path class="pause-string pause-string-shadow" d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
+          <path class="pause-string pause-string-main" d="M40,190 C110,128 180,142 258,158 C338,174 378,222 458,218 C540,214 598,182 680,176 C770,170 860,178 950,172"/>
           <g class="pause-thread-cup" transform="translate(40,190) rotate(100)">
             <path d="M-6,0 L6,0 L10,24 L-10,24 Z"/>
             <ellipse cx="0" cy="24" rx="10" ry="3.2"/>
@@ -326,7 +364,6 @@
     <div class="eyebrow"><span class="eyebrow-num">07</span><div class="line"></div><span>Тарифы</span><div class="line"></div></div>
     <h2>Выбери, сколько личного внимания тебе нужно</h2>
     <div class="tariff-grid">
-
       <div class="tariff-card">
         <div class="tariff-name">Базовый</div>
         <div class="tariff-for">Сомневаешься и хочешь попробовать с низким риском</div>
@@ -371,7 +408,6 @@
         <div class="tariff-result">Индивидуальный план + подтверждённый прогресс на сравнении «до / после».</div>
         <a class="btn btn-ghost" href="https://t.me/Marinatoken_bot?start=waitlist_tariff3" target="_blank" rel="noopener">Записаться в лист ожидания</a>
       </div>
-
     </div>
 
     <div class="bonus-strip">
@@ -514,6 +550,7 @@
   <span class="sticky-cta-text">Интенсив британского произношения · старт совсем скоро</span>
   <a class="btn btn-primary btn-small" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Записаться</a>
 </div>
+
 <script src="/assets/main.js"></script>
 </body>
 </html>
