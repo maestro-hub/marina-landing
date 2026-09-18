@@ -213,19 +213,19 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,summary:focus-visible{ou
 }
 .section-scene--right{
   background-position:right 30%;
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
-  mask-image:linear-gradient(to right,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+  -webkit-mask-image:radial-gradient(ellipse 68% 54% at 102% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
+  mask-image:radial-gradient(ellipse 68% 54% at 102% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
 }
 .section-scene--left{
   background-position:left 30%;
-  -webkit-mask-image:linear-gradient(to left,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
-  mask-image:linear-gradient(to left,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+  -webkit-mask-image:radial-gradient(ellipse 68% 54% at -2% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
+  mask-image:radial-gradient(ellipse 68% 54% at -2% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
 }
 .section-scene--center{
   background-position:center 38%;
   opacity:.3;
-  -webkit-mask-image:radial-gradient(ellipse 62% 60% at 50% 42%,transparent 0%,transparent 30%,rgba(0,0,0,.55) 62%,black 100%);
-  mask-image:radial-gradient(ellipse 62% 60% at 50% 42%,transparent 0%,transparent 30%,rgba(0,0,0,.55) 62%,black 100%);
+  -webkit-mask-image:radial-gradient(ellipse 58% 46% at 50% 42%,transparent 0%,transparent 28%,rgba(0,0,0,.5) 55%,black 78%,transparent 100%);
+  mask-image:radial-gradient(ellipse 58% 46% at 50% 42%,transparent 0%,transparent 28%,rgba(0,0,0,.5) 55%,black 78%,transparent 100%);
 }
 @media (max-width:760px){
   .section-scene{opacity:.32}
