@@ -24,11 +24,14 @@
 <nav class="sitenav">
   <div class="wrap">
     <a class="brand" href="/">Marina Speaks RP</a>
-    <div class="links">
-      <a href="#program">Программа</a>
-      <a href="#tariffs">Тарифы</a>
-      <a href="/articles/">Статьи</a>
-      <a href="#testimonials">Отзывы</a>
+    <div class="nav-right">
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Меню разделов"><span></span><span></span><span></span></button>
+      <div class="links" id="navLinks">
+        <a href="#program">Программа</a>
+        <a href="#tariffs">Тарифы</a>
+        <a href="/articles/">Статьи</a>
+        <a href="#testimonials">Отзывы</a>
+      </div>
       <a class="cta" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Записаться</a>
     </div>
   </div>
@@ -292,13 +295,51 @@
   <div class="wrap">
     <div class="eyebrow center"><span class="eyebrow-num">06</span><div class="line"></div><span>Что внутри</span><div class="line"></div></div>
     <h2>Каждый день - один конкретный звук</h2>
-    <div class="sound-row">
-      <div class="sound-card"><div class="medallion">iː</div><div class="name">FLEECE</div><div class="ipa">/iː/</div></div>
-      <div class="sound-card"><div class="medallion">æ</div><div class="name">TRAP</div><div class="ipa">/æ/</div></div>
-      <div class="sound-card"><div class="medallion">ɜː</div><div class="name">NURSE</div><div class="ipa">/ɜː/</div></div>
-      <div class="sound-card"><div class="medallion">θ</div><div class="name">THOUGHT</div><div class="ipa">/θ/</div></div>
+    <div class="sound-row" role="group" aria-label="Звуки интенсива - выбери звук, чтобы увидеть артикуляцию">
+      <button type="button" class="sound-card" data-sound="i" aria-pressed="true"><span class="medallion">iː</span><span class="name">FLEECE</span><span class="ipa">/iː/</span></button>
+      <button type="button" class="sound-card" data-sound="ae" aria-pressed="false"><span class="medallion">æ</span><span class="name">TRAP</span><span class="ipa">/æ/</span></button>
+      <button type="button" class="sound-card" data-sound="er" aria-pressed="false"><span class="medallion">ɜː</span><span class="name">NURSE</span><span class="ipa">/ɜː/</span></button>
+      <button type="button" class="sound-card" data-sound="th" aria-pressed="false"><span class="medallion">θ</span><span class="name">THOUGHT</span><span class="ipa">/θ/</span></button>
     </div>
     <p class="curriculum-more">...и ещё 16 звуков британского произношения впереди</p>
+
+    <div class="atlas">
+      <figure class="atlas-figure">
+        <svg class="articulation" id="atlasSvg" viewBox="0 0 420 340" role="img" aria-labelledby="atlasCaption">
+          <defs>
+            <pattern id="hBone" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.6" height="2.6" class="hatch-ground"/><path d="M0 0V2.6" class="hatch-line"/></pattern>
+          </defs>
+          <path class="a-bone" d="M114 101 C118 96 124 96 130 94 C150 84 184 80 214 88 L216 74.5 C188 70 150 74 114 92 Z"/>
+          <path class="a-soft" d="M114 92 C150 74 202 70 244 82 C258 86 266 94 270 104"/>
+          <path class="a-face" d="M124 6 C110 32 80 56 62 76 C56 83 60 92 84 92 C82 100 76 108 72 114 C70 120 76 124 90 125"/>
+          <path class="a-tooth" d="M106 100 C102 108 98 118 97 128 C99 130 103 129 105 127 C108 118 111 110 114 101 Z"/>
+          <path class="a-line" d="M114 101 C118 96 124 96 130 94 C150 84 184 80 214 88 C236 94 252 104 258 118 C260 126 266 132 270 124"/>
+          <path class="a-line" d="M250 38 C276 60 290 98 292 142 C294 200 290 262 288 334"/>
+          <g id="atlasJaw" transform="rotate(-1 250 112)">
+            <path class="a-face" d="M90 131 C78 132 70 138 72 146 C74 154 84 156 90 158 C82 170 72 186 80 202 C88 214 128 218 186 222"/>
+            <path class="a-tooth" d="M102 134 C103 142 105 150 108 158 L113 157 C111 149 109 141 108 135 C106 133 104 133 102 134 Z"/>
+          </g>
+          <path class="a-face" id="atlasNeck" d="M187.9 223.1 C195.9 257.1 206 296 204 334"/>
+          <path class="a-line" d="M254 256 C262 244 272 240 280 248"/>
+          <path class="a-line" d="M234 264 C238 292 240 312 238 334"/>
+          <path class="a-tongue" id="atlasTongue" d="M116.9 163.3 C124.9 159.3 119 154 113 140 C124 112 152 98 188 100 C224 104 248 134 254 176 C258 204 258 232 254 256"/>
+          <g class="a-labels">
+            <line x1="36" y1="116" x2="72" y2="114"/><circle cx="72" cy="114" r="2"/><text x="4" y="120">губы</text>
+            <line x1="36" y1="92" x2="102" y2="108"/><circle cx="102" cy="108" r="2"/><text x="4" y="95">зубы</text>
+            <line x1="150" y1="40" x2="126" y2="95"/><circle cx="126" cy="95" r="2"/><text x="134" y="34">альвеолы</text>
+            <line x1="224" y1="40" x2="186" y2="82"/><circle cx="186" cy="82" r="2"/><text x="204" y="34">твёрдое нёбо</text>
+            <line x1="318" y1="116" x2="260" y2="112"/><circle cx="260" cy="112" r="2"/><text x="322" y="114">мягкое</text><text x="322" y="126">нёбо</text>
+            <line x1="318" y1="248" x2="280" y2="248"/><circle cx="280" cy="248" r="2"/><text x="322" y="251">надгортанник</text>
+            <text class="a-label-active" id="atlasTongueLabel" x="168" y="196">язык</text>
+          </g>
+        </svg>
+      </figure>
+
+      <div class="atlas-legend">
+        <p class="atlas-glyph" id="atlasGlyph" aria-hidden="true">iː</p>
+        <p class="atlas-caption" id="atlasCaption" aria-live="polite"><span id="atlasText">/iː/ FLEECE: язык поднят высоко и продвинут вперёд, губы слегка растянуты. Звук долгий.</span></p>
+      </div>
+    </div>
 
     <svg class="timeline-svg" viewBox="0 0 600 44" role="img" aria-label="Три недели интенсива по порядку">
       <line x1="50" y1="22" x2="550" y2="22" stroke="var(--border-gold)" stroke-width="1.5"/>
