@@ -221,15 +221,8 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,summary:focus-visible{ou
   -webkit-mask-image:radial-gradient(ellipse 68% 54% at -2% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
   mask-image:radial-gradient(ellipse 68% 54% at -2% 50%,black 0%,black 30%,rgba(0,0,0,.5) 55%,transparent 86%);
 }
-.section-scene--center{
-  background-position:center 38%;
-  opacity:.3;
-  -webkit-mask-image:radial-gradient(ellipse 58% 32% at 50% 42%,transparent 0%,transparent 22%,rgba(0,0,0,.5) 45%,black 65%,transparent 92%);
-  mask-image:radial-gradient(ellipse 58% 32% at 50% 42%,transparent 0%,transparent 22%,rgba(0,0,0,.5) 45%,black 65%,transparent 92%);
-}
 @media (max-width:760px){
   .section-scene{opacity:.32}
-  .section-scene--center{opacity:.22}
 }
 
 .hero-grid{
