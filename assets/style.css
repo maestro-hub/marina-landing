@@ -200,6 +200,38 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,summary:focus-visible{ou
 .hero-scene-fade-top{top:0;height:120px;background:linear-gradient(to bottom,var(--bg-top) 0%,transparent 100%)}
 .hero-scene-fade-bottom{bottom:0;height:160px;background:linear-gradient(to top,var(--bg-mid) 0%,transparent 100%)}
 
+/* --- Secondary British-scene backgrounds (same recipe as hero-scene, deliberately fainter) --- */
+.section-scene{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size:cover;
+  opacity:.5;
+  filter:saturate(.8) brightness(.82) contrast(1.02) sepia(.14);
+}
+.section-scene--right{
+  background-position:right 30%;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+  mask-image:linear-gradient(to right,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+}
+.section-scene--left{
+  background-position:left 30%;
+  -webkit-mask-image:linear-gradient(to left,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+  mask-image:linear-gradient(to left,transparent 0%,transparent 58%,rgba(0,0,0,.4) 72%,rgba(0,0,0,.8) 84%,black 100%);
+}
+.section-scene--center{
+  background-position:center 38%;
+  opacity:.3;
+  -webkit-mask-image:radial-gradient(ellipse 62% 60% at 50% 42%,transparent 0%,transparent 30%,rgba(0,0,0,.55) 62%,black 100%);
+  mask-image:radial-gradient(ellipse 62% 60% at 50% 42%,transparent 0%,transparent 30%,rgba(0,0,0,.55) 62%,black 100%);
+}
+@media (max-width:760px){
+  .section-scene{opacity:.32}
+  .section-scene--center{opacity:.22}
+}
+
 .hero-grid{
   position:relative;
   z-index:1;
