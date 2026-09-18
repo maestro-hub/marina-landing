@@ -66,37 +66,6 @@
 
       <p class="lead">Короткие видео, тренировка на словах и личный разбор твоего произношения от Марины. Звук за звуком - вместо «английского вообще».</p>
 
-      <div class="hero-sound-tools" aria-label="Скрытые аудио-пасхалки">
-        <span class="hero-sound-tools__label">Нажми на символы</span>
-
-        <button type="button" class="seal" id="queenRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть отрывок коронационной речи Елизаветы II, 1953 год, 15 секунд">
-          <span class="seal__wax" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 18V12L7.5 14.5L12 7L16.5 14.5L20 12V18Z" fill="currentColor"/>
-              <rect x="4" y="18" width="16" height="1.6" rx="0.6" fill="currentColor"/>
-            </svg>
-          </span>
-        </button>
-
-        <button type="button" class="medal" id="beatRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть ритм в стиле стадионного стомп-клэпа">
-          <span class="medal__face" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="13" width="3" height="7" rx="1" fill="currentColor"/>
-              <rect x="10.5" y="7" width="3" height="13" rx="1" fill="currentColor"/>
-              <rect x="17" y="10" width="3" height="10" rx="1" fill="currentColor"/>
-            </svg>
-          </span>
-        </button>
-
-        <button type="button" class="record" id="anthemRecord" aria-pressed="false" aria-label="Скрытая пасхалка: проиграть God Save the King, 22 секунды">
-          <span class="record__disc" aria-hidden="true"></span>
-        </button>
-
-        <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
-        <audio id="beatAudio" src="/assets/audio/stomp-clap.mp3" preload="none"></audio>
-        <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
-      </div>
-
       <div class="cta-row">
         <a class="btn btn-primary" href="#tariffs">Смотреть тарифы</a>
         <a class="text-cta" href="https://t.me/marina_online_english" target="_blank" rel="noopener">Канал Марины в Telegram <span class="arrow">→</span></a>
@@ -125,17 +94,20 @@
     </div>
 
     <div class="hero-visual">
-      <div class="speech-bubble" aria-hidden="true">
+      <button type="button" class="speech-bubble" id="beatRecord" aria-pressed="false" aria-label="Пасхалка: сыграть стадионный стомп-клэп ритм">
         <span class="sb-text">Hi, how are you?</span>
         <span class="sb-ipa">/haɪ ˌhaʊ ɑː juː/</span>
-      </div>
+      </button>
 
-      <div class="hero-portrait">
+      <button type="button" class="hero-portrait" id="anthemRecord" aria-pressed="false" aria-label="Пасхалка: проиграть God Save the King, 22 секунды">
         <img src="/assets/img/marina-portrait.jpg" alt="Марина">
-      </div>
+        <span class="hero-portrait__note" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18V5l10-2v13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.7"/><circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+        </span>
+      </button>
 
       <p class="hero-portrait-caption">
-        <span class="deco-flag-badge" aria-hidden="true">
+        <button type="button" class="deco-flag-badge" id="queenRecord" aria-pressed="false" aria-label="Пасхалка: проиграть отрывок коронационной речи Елизаветы II, 1953 год, 15 секунд">
           <svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
             <rect width="60" height="36" fill="#1c2b4a"/>
             <path d="M0 0 L60 36 M60 0 L0 36" stroke="#f5ece0" stroke-width="7"/>
@@ -143,9 +115,13 @@
             <path d="M30 0 V36 M0 18 H60" stroke="#f5ece0" stroke-width="11"/>
             <path d="M30 0 V36 M0 18 H60" stroke="#a8493c" stroke-width="6"/>
           </svg>
-        </span>
+        </button>
         Курс ведёт Марина Маркова, фонетист
       </p>
+
+      <audio id="queenAudio" src="/assets/audio/queen-speech-clip.mp3" preload="none"></audio>
+      <audio id="beatAudio" src="/assets/audio/stomp-clap.mp3" preload="none"></audio>
+      <audio id="anthemAudio" src="/assets/audio/anthem-clip.mp3" preload="none"></audio>
     </div>
   </div>
 
