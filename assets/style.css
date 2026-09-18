@@ -43,7 +43,7 @@ body{margin:0;font-family:'Inter','Segoe UI',Arial,sans-serif;background:var(--b
 
 .bg-wrap{
   position:relative;
-  background:radial-gradient(ellipse 120% 70% at 50% -10%,#7c2c24 0%,transparent 52%),radial-gradient(ellipse at top,var(--bg-top) 0%,var(--bg-mid) 52%,var(--bg-bottom) 100%);
+  background:radial-gradient(ellipse 120% 70% at 50% -10%,#7c2c24 0%,transparent 52%),radial-gradient(ellipse at top,var(--bg-top) 0%,#63201a 30%,var(--bg-mid) 52%,#4f1611 76%,var(--bg-bottom) 100%);
 }
 
 .bg-wrap::before{
@@ -142,7 +142,7 @@ a:hover{color:var(--gold)}
 a:focus-visible,.btn:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid rgba(232,200,136,.95);outline-offset:3px}
 
 /* --- Top nav --- */
-.sitenav{position:sticky;top:0;z-index:40;padding:14px 0;background:linear-gradient(to bottom,rgba(49,12,10,.96) 0%,rgba(49,12,10,.88) 72%,rgba(49,12,10,0) 100%)}
+.sitenav{position:sticky;top:0;z-index:40;padding:14px 0;background:linear-gradient(to bottom,rgba(49,12,10,.96) 0%,rgba(49,12,10,.82) 50%,rgba(49,12,10,.4) 80%,rgba(49,12,10,0) 100%)}
 .sitenav::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(to right,transparent 0%,rgba(201,162,94,.32) 18%,rgba(201,162,94,.18) 82%,transparent 100%);pointer-events:none}
 .sitenav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .sitenav .brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:var(--cream-panel);font-size:1.18rem;text-decoration:none;letter-spacing:-.015em;text-shadow:0 1px 12px rgba(0,0,0,.4)}
@@ -500,7 +500,7 @@ details[open] summary::after{transform:rotate(45deg)}
 details p{max-width:58ch;margin:0;padding:0 4px 20px;font-size:.92rem}
 
 /* --- Final CTA / footer / sticky CTA --- */
-.final-cta{padding:104px 0 112px;background:radial-gradient(820px 320px at 50% 0%,rgba(232,200,136,.12),transparent 64%),linear-gradient(180deg,rgba(0,0,0,.1),transparent 58%);text-align:center}
+.final-cta{padding:104px 0 112px;background:radial-gradient(820px 320px at 50% 0%,rgba(232,200,136,.12),transparent 64%);text-align:center}
 .final-cta .lead{margin:8px auto 0}
 .final-cta .cta-row{margin-top:32px}
 footer{position:relative;z-index:1;padding:40px 0 88px;background:linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,.18));text-align:center}
