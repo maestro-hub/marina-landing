@@ -393,3 +393,125 @@
     });
   });
 })();
+
+/* Продуктовые метрики (2026-09-30): свой счётчик вместо Яндекс.Метрики.
+   Без cookie и персональных данных: случайный id посетителя в localStorage, IP на сервере не хранится.
+   Кнопки в бота получают хвост ?start=<как было>__<место>__<источник>__<id визита> -
+   бот запоминает, откуда пришёл человек (см. split_start_attribution в боте). */
+(function(){
+  var ENDPOINT = 'https://sergei-akimov.com/mstats/e';
+  function store(kind, key, val){
+    try{
+      var s = kind === 'l' ? window.localStorage : window.sessionStorage;
+      if(val === undefined) return s.getItem(key);
+      s.setItem(key, val);
+    }catch(e){}
+    return val === undefined ? null : val;
+  }
+  function rid(n){
+    var a = 'abcdefghijklmnopqrstuvwxyz0123456789', out = '';
+    for(var i = 0; i < n; i++) out += a.charAt(Math.floor(Math.random() * a.length));
+    return out;
+  }
+  function clean(v, n){ return String(v || '').replace(/[^A-Za-z0-9-]/g, '').slice(0, n || 12); }
+
+  var vid = store('l', 'ms_vid') || store('l', 'ms_vid', rid(8)) || rid(8);
+  var sid = store('s', 'ms_sid') || store('s', 'ms_sid', rid(8)) || rid(8);
+
+  var q = new URLSearchParams(location.search);
+  var utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ if(q.get(k)) utm[k] = q.get(k); });
+
+  // источник: utm_source, иначе сайт-реферер; первое касание запоминаем
+  function refSource(){
+    var r = document.referrer;
+    if(!r) return 'direct';
+    var h;
+    try{ h = new URL(r).hostname.replace(/^www\./, ''); }catch(e){ return 'direct'; }
+    if(h === location.hostname) return '';
+    var map = { 't.me':'tg', 'telegram.org':'tg', 'web.telegram.org':'tg', 'instagram.com':'ig', 'l.instagram.com':'ig',
+      'threads.net':'threads', 'vk.com':'vk', 'm.vk.com':'vk', 'google.com':'google', 'yandex.ru':'yandex', 'ya.ru':'yandex',
+      'youtube.com':'yt', 'facebook.com':'fb', 'l.facebook.com':'fb' };
+    return map[h] || h.split('.')[0];
+  }
+  var src = clean(utm.utm_source) || clean(refSource());
+  if(src) store('l', 'ms_src') || store('l', 'ms_src', src);
+  var firstSrc = store('l', 'ms_src') || src || 'direct';
+
+  function send(ev, extra){
+    var d = { site: /(^|\.)marinaspeaksrp\.org$/.test(location.hostname) ? 'marina' : 'marina-dev', vid: vid, sid: sid, ev: ev, path: location.pathname, ref: document.referrer.slice(0, 200),
+      sw: String(screen.width), sh: String(screen.height), lang: navigator.language || '',
+      device: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop' };
+    for(var k in utm) d[k] = utm[k];
+    for(var e in (extra || {})) d[e] = String(extra[e]);
+    var body = JSON.stringify(d);
+    try{
+      if(navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, new Blob([body], { type: 'text/plain' }))) return;
+    }catch(err){}
+    try{ fetch(ENDPOINT, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }); }catch(err){}
+  }
+
+  send('pageview');
+
+  // кнопки в бота: место на странице + хвост атрибуции
+  function placeOf(a){
+    if(a.dataset.place) return a.dataset.place;
+    var m = (a.href.match(/start=waitlist_(tariff\d)/) || [])[1];
+    if(m) return m.replace('tariff', 't');
+    if(a.closest('#stickyCta')) return 'sticky';
+    if(a.closest('header, nav')) return 'header';
+    var slug = location.pathname.split('/').filter(Boolean).pop() || '';
+    if(location.pathname.indexOf('/articles/') === 0) return ('art-' + slug.replace('.html', '')).slice(0, 24);
+    var sec = a.closest('section');
+    return sec && sec.id ? sec.id.slice(0, 24) : 'page';
+  }
+  document.querySelectorAll('a[href*="t.me/Marinatoken_bot"]').forEach(function(a){
+    var place = clean(placeOf(a), 24);
+    try{
+      var u = new URL(a.href);
+      var base = (u.searchParams.get('start') || 'waitlist').split('__')[0];
+      u.searchParams.set('start', base + '__' + place + '__' + (clean(firstSrc) || 'direct') + '__' + vid);
+      a.href = u.toString();
+    }catch(e){}
+    a.addEventListener('click', function(){ send('click', { label: place, value: 'bot' }); });
+  });
+
+  // глубина прокрутки
+  var marks = [25, 50, 75, 100], hit = {};
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.round(window.scrollY / h * 100) : 100;
+    marks.forEach(function(m){ if(p >= m && !hit[m]){ hit[m] = 1; send('scroll', { value: m }); } });
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+
+  // какие секции реально увидели
+  if('IntersectionObserver' in window){
+    var seen = {};
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var id = en.target.id;
+        if(en.isIntersecting && id && !seen[id]){ seen[id] = 1; send('section_view', { label: id }); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('section[id]').forEach(function(s){ io.observe(s); });
+  }
+
+  // открытия вопросов FAQ
+  document.querySelectorAll('details').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if(d.open){ var s = d.querySelector('summary'); send('faq_open', { label: (s ? s.textContent : '').trim().slice(0, 60) }); }
+    });
+  });
+
+  // вовлечённость: 15 секунд на видимой вкладке; уход - сколько секунд провёл
+  var t0 = Date.now(), visibleMs = 0, lastVis = Date.now(), engaged = false;
+  setInterval(function(){
+    if(document.visibilityState === 'visible'){ visibleMs += Date.now() - lastVis; }
+    lastVis = Date.now();
+    if(!engaged && visibleMs >= 15000){ engaged = true; send('engaged'); }
+  }, 1000);
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'hidden') send('leave', { value: Math.round((Date.now() - t0) / 1000) });
+  });
+})();
