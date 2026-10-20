@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Интенсив британского произношения - Marina Speaks RP</title>
-<meta name="description" content="15 занятий, один звук в день. Марина - фонетист - лично разбирает твою артикуляцию по видео-кружку. Не 'английский вообще', а конкретная система постановки британского произношения. Старт 8 октября.">
+<meta name="description" content="15 занятий, один звук в день. Марина - фонетист - лично разбирает твою артикуляцию по видео-кружку. Не 'английский вообще', а конкретная система постановки британского произношения. Следующий поток - в 2027.">
 <link rel="canonical" href="https://marinaspeaksrp.org/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Интенсив британского произношения - Marina Speaks RP">
-<meta property="og:description" content="15 занятий, один звук в день. Личный разбор артикуляции от Марины, фонетиста. Старт 8 октября.">
+<meta property="og:description" content="15 занятий, один звук в день. Личный разбор артикуляции от Марины, фонетиста. Следующий поток - в 2027.">
 <meta property="og:image" content="https://marinaspeaksrp.org/assets/img/og-cover.jpg">
 <meta property="og:url" content="https://marinaspeaksrp.org/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png">
-<link rel="stylesheet" href="/assets/style.css?v=20261003">
+<link rel="stylesheet" href="/assets/style.css?v=20261020b">
 </head>
 <body>
 <div class="bg-wrap">
@@ -32,7 +32,7 @@
         <a href="/articles/">Статьи</a>
         <a href="#testimonials">Отзывы</a>
       </div>
-      <a class="cta" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Занять место</a>
+      <a class="cta" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Лист ожидания</a>
     </div>
   </div>
 </nav>
@@ -58,7 +58,7 @@
 
       <div class="eyebrow">
         <div class="line"></div>
-        <span>Интенсив британского произношения · старт 8 октября</span>
+        <span>Интенсив британского произношения · поток 2027</span>
         <div class="line"></div>
       </div>
 
@@ -81,7 +81,7 @@
           <span>звуков<br>британского RP</span>
         </div>
         <div class="hero-proof">
-          <strong>10–15</strong>
+          <strong>10-15</strong>
           <span>минут<br>в день</span>
         </div>
       </div>
@@ -129,40 +129,57 @@
     <div class="minpair-card" id="soundCard">
       <div class="minpair-col minpair-question">
         <div class="minpair-card-head">
-          <h3>Слышишь разницу между ship и sheep?</h3>
-          <span class="minpair-card-tag">20 сек</span>
+          <h3>Тест на слух: 5 пар британских звуков</h3>
+          <span class="minpair-card-tag">1 минута</span>
         </div>
 
-        <button type="button" class="sc-btn sc-play" id="scPlay">▶ Послушать и выбрать слово</button>
+        <ol class="mp-steps" id="mpSteps" aria-label="Прогресс теста">
+          <li class="mp-step" aria-current="step"><span class="mp-dot">1</span></li>
+          <li class="mp-step"><span class="mp-dot">2</span></li>
+          <li class="mp-step"><span class="mp-dot">3</span></li>
+          <li class="mp-step"><span class="mp-dot">4</span></li>
+          <li class="mp-step"><span class="mp-dot">5</span></li>
+        </ol>
+
+        <p class="mp-pair" id="mpPair">Пара 1 из 5 · /ɪ/ или /iː/</p>
+
+        <button type="button" class="sc-btn sc-play" id="scPlay">▶ Послушать слово</button>
 
         <div class="sc-question">
           <p>Какое слово прозвучало?</p>
           <div class="sc-answers">
-            <button type="button" class="sc-btn sc-answer" data-word="ship" disabled aria-pressed="false">ship <span class="ipa">/ʃɪp/</span></button>
-            <button type="button" class="sc-btn sc-answer" data-word="sheep" disabled aria-pressed="false">sheep <span class="ipa">/ʃiːp/</span></button>
+            <button type="button" class="sc-btn sc-answer" data-slot="0" disabled aria-pressed="false">ship <span class="ipa">/ʃɪp/</span></button>
+            <button type="button" class="sc-btn sc-answer" data-slot="1" disabled aria-pressed="false">sheep <span class="ipa">/ʃiːp/</span></button>
           </div>
         </div>
       </div>
 
       <div class="minpair-col minpair-result">
         <div class="sc-teaser" id="scTeaser">
-          <span class="sc-teaser-ipa" aria-hidden="true">ɪ<i>/</i>iː</span>
-          <p>Такие пары гласных тренируем на курсе.</p>
+          <span class="sc-teaser-ipa" id="scTeaserIpa" aria-hidden="true">ɪ<i>/</i>iː</span>
+          <p>Пять пар звуков, которые русскому уху легко спутать. Такие пары и тренируем на курсе.</p>
         </div>
 
         <div class="sc-feedback" id="scFeedback" aria-live="polite" hidden>
           <p class="sc-feedback-text" id="scFeedbackText"></p>
-          <p class="sc-explain">В ship гласный короткий и более расслабленный: /ɪ/. В sheep гласный длиннее и напряжённее: /iː/. Для русскоязычных это не одна «и», а два разных звука.</p>
+          <p class="sc-explain" id="scExplain"></p>
           <div class="sc-compare">
-            <button type="button" class="sc-btn sc-mini" data-word="ship">▶ ship /ʃɪp/</button>
-            <button type="button" class="sc-btn sc-mini" data-word="sheep">▶ sheep /ʃiːp/</button>
+            <button type="button" class="sc-btn sc-mini" data-slot="0">▶ ship /ʃɪp/</button>
+            <button type="button" class="sc-btn sc-mini" data-slot="1">▶ sheep /ʃiːp/</button>
           </div>
-          <p class="sc-bridge">На интенсиве вы присылаете свою запись, а Марина объясняет, что и как поправить. <a href="#program">Как проходят 15 занятий →</a></p>
+          <button type="button" class="sc-btn sc-next" id="scNext">Следующая пара →</button>
         </div>
-      </div>
 
-      <audio id="scAudioShip" src="/assets/audio/word-ship.mp3" preload="none"></audio>
-      <audio id="scAudioSheep" src="/assets/audio/word-sheep.mp3" preload="none"></audio>
+        <div class="sc-final" id="scFinal" aria-live="polite" hidden>
+          <p class="sc-score"><strong id="scScore">0</strong> из 5</p>
+          <p class="sc-verdict" id="scVerdict"></p>
+          <div class="sc-final-actions">
+            <a class="btn btn-primary btn-small" data-place="quiz" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Узнать о потоке 2027</a>
+            <button type="button" class="sc-btn sc-mini" id="scRestart">↻ Пройти ещё раз</button>
+          </div>
+        </div>
+        <p class="sc-voice-note">Слова озвучены синтезатором британской речи.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -319,6 +336,27 @@
       <div class="atlas-legend">
         <p class="atlas-glyph" id="atlasGlyph" aria-hidden="true">iː</p>
         <p class="atlas-caption" id="atlasCaption" aria-live="polite"><span id="atlasText">/iː/ FLEECE: язык поднят высоко и продвинут вперёд, губы слегка растянуты. Звук долгий.</span></p>
+        <div class="atlas-player">
+          <button class="sl-playback" id="atlasPlay" type="button" data-playing="false" aria-label="Послушать примеры">
+            <span class="sl-playback__surface" aria-hidden="true">
+              <span class="sl-playback__icon">
+                <span class="sl-playback__piece sl-playback__piece--left"></span>
+                <span class="sl-playback__piece sl-playback__piece--right"></span>
+              </span>
+              <span class="sl-playback__label">Слушать</span>
+            </span>
+          </button>
+          <p class="atlas-words" id="atlasWords">sheep · see · team</p>
+          <div class="speed" id="atlasSpeed">
+            <label class="speed-label" for="atlasRate">Скорость <output id="atlasRateOut" for="atlasRate">1×</output></label>
+            <input type="range" id="atlasRate" min="0.5" max="1" step="0.25" value="1" aria-valuetext="1×">
+            <div class="speed-stops" aria-hidden="true">
+              <button type="button" tabindex="-1" data-rate="0.5">0.5×</button>
+              <button type="button" tabindex="-1" data-rate="0.75">0.75×</button>
+              <button type="button" tabindex="-1" data-rate="1">1×</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -395,11 +433,10 @@
         <ul class="tariff-list">
           <li>Все 15 уроков (видео + фирменные PDF-конспекты)</li>
           <li>Ежедневные напоминания от бота</li>
-          <li>Общий чат участников</li>
           <li>Без личной обратной связи Марины</li>
         </ul>
         <div class="tariff-result">Пройденная система постановки звуков + самостоятельная практика с чек-листом прогресса.</div>
-        <a class="btn btn-ghost" href="https://t.me/Marinatoken_bot?start=waitlist_tariff1" target="_blank" rel="noopener">Выбрать Базовый</a>
+        <a class="btn btn-ghost" href="https://t.me/Marinatoken_bot?start=waitlist_tariff1" target="_blank" rel="noopener">Хочу Базовый в 2027</a>
       </div>
 
       <div class="tariff-card featured">
@@ -413,7 +450,7 @@
           <li>Личная голосовая обратная связь на каждое домашнее задание</li>
         </ul>
         <div class="tariff-result">Исправленные конкретные ошибки произношения с личной проверкой Марины.</div>
-        <a class="btn btn-primary" href="https://t.me/Marinatoken_bot?start=waitlist_tariff2" target="_blank" rel="noopener">Хочу Стандарт →</a>
+        <a class="btn btn-primary" href="https://t.me/Marinatoken_bot?start=waitlist_tariff2" target="_blank" rel="noopener">Хочу Стандарт в 2027 →</a>
       </div>
 
       <div class="tariff-card">
@@ -428,11 +465,13 @@
           <li>Приоритетный разбор домашки вне очереди</li>
         </ul>
         <div class="tariff-result">Индивидуальный план + подтверждённый прогресс на сравнении «до / после».</div>
-        <a class="btn btn-ghost" href="https://t.me/Marinatoken_bot?start=waitlist_tariff3" target="_blank" rel="noopener">Забронировать место</a>
+        <a class="btn btn-ghost" href="https://t.me/Marinatoken_bot?start=waitlist_tariff3" target="_blank" rel="noopener">Хочу Премиум в 2027</a>
       </div>
     </div>
 
-    <p class="waitlist-note">Оплата - в Telegram-боте Марины, место подтверждается сразу. Старт 8 октября: в четверг в 9:48 по Москве бот пришлёт первый урок.</p>
+    <button type="button" class="btn btn-ghost cmp-open" id="cmpOpen" aria-haspopup="dialog" aria-controls="cmpDialog" hidden>Сравнить тарифы по пунктам</button>
+
+    <p class="waitlist-note">Текущий поток уже идёт, новых участников в него не добавляем. Следующий - в 2027: нажми на любой тариф, бот Марины запишет тебя в лист ожидания, а о старте записи мы сообщим в боте.</p>
   </div>
 </section>
 
@@ -473,33 +512,46 @@
   <div class="wrap">
     <div class="eyebrow"><span class="eyebrow-num">09</span><div class="line"></div><span>Что пишут</span><div class="line"></div></div>
     <h2>Реальные сообщения от учеников Марины</h2>
-    <div class="testimonial-grid">
-      <figure class="testimonial-card">
+    <div class="tcar" id="tcar" role="region" aria-roledescription="карусель" aria-label="Отзывы учеников">
+      <div class="testimonial-grid tcar-track" id="tcarTrack" tabindex="0">
+      <figure class="testimonial-card" role="group" aria-roledescription="слайд" aria-label="1 из 4">
         <svg class="deco-paperclip" aria-hidden="true" viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 14 V32 a6 6 0 0 0 12 0 V10 a4 4 0 0 0-8 0 V30"/></svg>
         <img src="/assets/img/otzyv.jpg" alt="Отзыв ученицы Марины в переписке">
       </figure>
-      <figure class="testimonial-card">
+      <figure class="testimonial-card" role="group" aria-roledescription="слайд" aria-label="2 из 4">
         <svg class="deco-paperclip" aria-hidden="true" viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 14 V32 a6 6 0 0 0 12 0 V10 a4 4 0 0 0-8 0 V30"/></svg>
         <img src="/assets/img/otzyv1.jpg" alt="Отзыв ученицы Марины в переписке">
       </figure>
-      <figure class="testimonial-card">
+      <figure class="testimonial-card" role="group" aria-roledescription="слайд" aria-label="3 из 4">
         <svg class="deco-paperclip" aria-hidden="true" viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 14 V32 a6 6 0 0 0 12 0 V10 a4 4 0 0 0-8 0 V30"/></svg>
         <img src="/assets/img/otzyv2.jpg" alt="Отзыв ученицы Марины в переписке">
       </figure>
-      <figure class="testimonial-card">
+      <figure class="testimonial-card" role="group" aria-roledescription="слайд" aria-label="4 из 4">
         <svg class="deco-paperclip" aria-hidden="true" viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 14 V32 a6 6 0 0 0 12 0 V10 a4 4 0 0 0-8 0 V30"/></svg>
         <img src="/assets/img/otzyv4.jpg" alt="Отзыв ученицы Марины в переписке">
       </figure>
+      </div>
+      <div class="tcar-nav">
+        <button type="button" class="tcar-btn" id="tcarPrev" aria-label="Предыдущий отзыв"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="tcar-dots" id="tcarDots"></div>
+        <button type="button" class="tcar-btn" id="tcarNext" aria-label="Следующий отзыв"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="faq" id="objections">
+<section class="faq" id="faq">
   <div class="watermark" style="top:6px; left:7%; font-size:52px; --dur:14s; --delay:-7s;">ɪ</div>
+  <div class="watermark" style="bottom:6px; right:8%; font-size:50px; --dur:9.5s; --delay:-2.5s;">eɪ</div>
   <div class="wrap narrow">
-    <div class="eyebrow"><span class="eyebrow-num">10</span><div class="line"></div><span>Сомнения</span><div class="line"></div></div>
+    <div class="eyebrow"><span class="eyebrow-num">10</span><div class="line"></div><span>Вопросы</span><div class="line"></div></div>
     <h2>То, о чём ты сейчас думаешь</h2>
-    <div class="faq-list">
+    <div class="faq-tabs" role="tablist" aria-label="Темы вопросов" hidden>
+      <span class="faq-tabs-indicator" aria-hidden="true"></span>
+      <button type="button" role="tab" id="faqTab0" aria-controls="objections" aria-selected="true" tabindex="0">Сомнения</button>
+      <button type="button" role="tab" id="faqTab1" aria-controls="faqOrg" aria-selected="false" tabindex="-1">Организационное</button>
+    </div>
+    <div class="faq-list" role="tabpanel" id="objections" aria-labelledby="faqTab0">
       <details>
         <summary>У меня уже хороший английский. Мне вообще нужен этот курс?</summary>
         <p>Именно для этого случая - тариф «Премиум»: не язык с нуля, а точечный разбор твоих конкретных сложных звуков. Хороший английский и чистое произношение - разные навыки, они не идут в комплекте автоматически.</p>
@@ -525,15 +577,11 @@
         <p>Да - произношение почти не коррелирует с уровнем лексики и грамматики. Часто именно у продвинутых студентов накапливается больше всего неосознанных, давно закрепившихся ошибок в конкретных звуках.</p>
       </details>
     </div>
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <div class="watermark" style="bottom:6px; right:8%; font-size:50px; --dur:9.5s; --delay:-2.5s;">eɪ</div>
-  <div class="wrap narrow">
-    <div class="eyebrow"><span class="eyebrow-num">11</span><div class="line"></div><span>Организационное</span><div class="line"></div></div>
-    <h2>Прежде чем записаться</h2>
-    <div class="faq-list">
+    <div class="faq-list" role="tabpanel" id="faqOrg" aria-labelledby="faqTab1">
+      <details>
+        <summary>Когда следующий поток?</summary>
+        <p>В 2027 году. Точную дату Марина объявит в боте: встань в лист ожидания, и о старте записи мы сообщим там.</p>
+      </details>
       <details>
         <summary>Это созвоны или домашка?</summary>
         <p>Ни то, ни другое в чистом виде. Короткое видео + твой видео-ответ + личная обратная связь от Марины, без обязательных созвонов (кроме тарифа «Премиум»).</p>
@@ -566,8 +614,8 @@
   <div class="watermark" style="top:10px; right:10%; font-size:60px; --dur:10s; --delay:-2s;">əʊ</div>
   <div class="wrap">
     <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);">Хватит молчать там,<br>где есть что сказать</h1>
-    <p class="lead mx-auto center">3 недели, 15 занятий, один конкретный звук в день. Старт 8 октября, места на «Премиум» ограничены.</p>
-    <div class="cta-row"><a class="btn btn-primary" data-place="final" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Занять место на 8 октября</a></div>
+    <p class="lead mx-auto center">3 недели, 15 занятий, один конкретный звук в день. Текущий поток уже идёт, следующий - в 2027. Встань в лист ожидания - о старте записи сообщим в боте Марины.</p>
+    <div class="cta-row"><a class="btn btn-primary" data-place="final" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Встать в лист ожидания 2027</a></div>
   </div>
 </section>
 
@@ -579,10 +627,44 @@
 </div>
 
 <div class="sticky-cta" id="stickyCta">
-  <span class="sticky-cta-text">Интенсив британского произношения · старт 8 октября</span>
-  <a class="btn btn-primary btn-small" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">Занять место</a>
+  <span class="sticky-cta-text">Поток уже идёт · следующий в 2027</span>
+  <a class="btn btn-primary btn-small" href="https://t.me/Marinatoken_bot?start=waitlist" target="_blank" rel="noopener">В лист ожидания</a>
 </div>
 
-<script src="/assets/main.js"></script>
+<dialog class="cmp-dialog" id="cmpDialog" aria-labelledby="cmpTitle">
+  <div class="cmp-head">
+    <h3 id="cmpTitle">Сравнение тарифов</h3>
+    <button type="button" class="cmp-close" id="cmpClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <label class="cmp-switch"><input type="checkbox" id="cmpDiff" role="switch"><span class="cmp-switch-track" aria-hidden="true"></span>Только различия</label>
+  <div class="cmp-scroll">
+    <table class="cmp-table">
+      <thead><tr><td></td><th scope="col">Базовый</th><th scope="col" class="cmp-featured">Стандарт</th><th scope="col">Премиум</th></tr></thead>
+      <tbody>
+          <tr data-same="1"><th scope="row">Все 15 уроков: видео и PDF-конспекты</th><td><span class="cmp-yes" aria-label="есть">✓</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr data-same="1"><th scope="row">Ежедневные напоминания от бота</th><td><span class="cmp-yes" aria-label="есть">✓</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr><th scope="row">Голосовой разбор каждой домашки от Марины</th><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr><th scope="row">2 личных созвона с Мариной по 30 мин</th><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr><th scope="row">Персональный план «что тренировать дальше»</th><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr><th scope="row">Разбор домашки вне очереди</th><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-no" aria-label="нет">-</span></td><td><span class="cmp-yes" aria-label="есть">✓</span></td></tr>
+          <tr class="cmp-price"><th scope="row">Цена текущего потока</th><td>4 990 ₽</td><td>10 990 ₽</td><td>18 990 ₽</td></tr>
+      </tbody>
+      <tfoot><tr><td></td>
+        <td><a class="btn btn-ghost btn-small" data-place="cmp-t1" href="https://t.me/Marinatoken_bot?start=waitlist_tariff1" target="_blank" rel="noopener">Базовый</a></td>
+        <td><a class="btn btn-primary btn-small" data-place="cmp-t2" href="https://t.me/Marinatoken_bot?start=waitlist_tariff2" target="_blank" rel="noopener">Стандарт</a></td>
+        <td><a class="btn btn-ghost btn-small" data-place="cmp-t3" href="https://t.me/Marinatoken_bot?start=waitlist_tariff3" target="_blank" rel="noopener">Премиум</a></td>
+      </tr></tfoot>
+    </table>
+  </div>
+  <p class="cmp-note">Кнопка тарифа откроет бота Марины и запишет в лист ожидания потока 2027.</p>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <span class="toast-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>
+  <div class="toast-body"><strong class="toast-title" id="toastTitle"></strong><span class="toast-detail" id="toastDetail"></span></div>
+  <button type="button" class="toast-close" id="toastClose" aria-label="Скрыть уведомление"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<script src="/assets/main.js?v=20261020b"></script>
 </body>
 </html>

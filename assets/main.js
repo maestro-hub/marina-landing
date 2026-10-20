@@ -133,107 +133,159 @@
   });
 })();
 
+// Тест на слух: 5 минимальных пар, шаги по образцу matte-steps-navigation (SL UI Library).
 (function(){
   var card = document.getElementById('soundCard');
 
   if(!card) return;
 
+  var PAIRS = [
+    { tag:'/ɪ/ или /iː/', ipa:'ɪ<i>/</i>iː', words:[['ship','/ʃɪp/'], ['sheep','/ʃiːp/']],
+      explain:'В ship гласный короткий и расслабленный: /ɪ/. В sheep он длиннее и напряжённее: /iː/. Для русскоязычных это не одна «и», а два разных звука.' },
+    { tag:'/e/ или /æ/', ipa:'e<i>/</i>æ', words:[['bed','/bed/'], ['bad','/bæd/']],
+      explain:'В bed рот приоткрыт, язык выше: /e/. В bad челюсть опускается, рот шире: /æ/. Русское «э» не подходит ни туда, ни туда.' },
+    { tag:'/ʊ/ или /uː/', ipa:'ʊ<i>/</i>uː', words:[['full','/fʊl/'], ['fool','/fuːl/']],
+      explain:'В full гласный короткий, губы почти не напряжены: /ʊ/. В fool он долгий, губы округлены сильнее: /uː/.' },
+    { tag:'/ʌ/ или /ɑː/', ipa:'ʌ<i>/</i>ɑː', words:[['cut','/kʌt/'], ['cart','/kɑːt/']],
+      explain:'В cut короткий звук в центре рта: /ʌ/. В cart долгий и глубокий, язык оттянут назад: /ɑː/. Буква r в британском cart не звучит.' },
+    { tag:'/θ/ или /s/', ipa:'θ<i>/</i>s', words:[['think','/θɪŋk/'], ['sink','/sɪŋk/']],
+      explain:'В think кончик языка между зубами, выдох через щель: /θ/. В sink язык за зубами: /s/. Подмена θ на s - одна из самых заметных черт русского акцента.' }
+  ];
+
   var playBtn = document.getElementById('scPlay');
   var answers = card.querySelectorAll('.sc-answer');
+  var minis = card.querySelectorAll('.sc-mini[data-slot]');
+  var steps = card.querySelectorAll('.mp-step');
+  var pairLabel = document.getElementById('mpPair');
   var teaser = document.getElementById('scTeaser');
+  var teaserIpa = document.getElementById('scTeaserIpa');
   var feedback = document.getElementById('scFeedback');
   var feedbackText = document.getElementById('scFeedbackText');
-  var audioShip = document.getElementById('scAudioShip');
-  var audioSheep = document.getElementById('scAudioSheep');
-  var miniButtons = card.querySelectorAll('.sc-mini');
+  var explain = document.getElementById('scExplain');
+  var nextBtn = document.getElementById('scNext');
+  var finalBox = document.getElementById('scFinal');
+  var scoreEl = document.getElementById('scScore');
+  var verdict = document.getElementById('scVerdict');
+  var restart = document.getElementById('scRestart');
 
-  if(!playBtn || !audioShip || !audioSheep) return;
+  if(!playBtn || !answers.length) return;
 
-  var target = Math.random() < 0.5 ? 'ship' : 'sheep';
-  var answered = false;
+  var audio = new Audio();
+  audio.preload = 'none';
+  var index = 0, target = 0, answered = false, score = 0;
 
-  function audioFor(word){
-    return word === 'ship' ? audioShip : audioSheep;
+  function word(slot){ return PAIRS[index].words[slot][0]; }
+
+  var stopCurrent = null;
+
+  // остановить звук и вернуть кнопке, которая его включила, активное состояние
+  function stop(){
+    audio.pause();
+    if(stopCurrent) stopCurrent();
   }
 
-  function stopOtherWordAudio(current){
-    [audioShip, audioSheep].forEach(function(audio){
-      if(audio !== current && !audio.paused){
-        audio.pause();
-        audio.currentTime = 0;
-      }
+  function play(slot, button){
+    stop();
+    audio.src = '/assets/audio/gb-' + word(slot) + '.mp3';
+    if(button) button.disabled = true;
+    function done(){
+      if(button) button.disabled = false;
+      audio.removeEventListener('ended', done);
+      if(stopCurrent === done) stopCurrent = null;
+    }
+    stopCurrent = done;
+    audio.addEventListener('ended', done);
+    audio.play().catch(done);
+  }
+
+  function label(button, slot){
+    var w = PAIRS[index].words[slot];
+    button.innerHTML = (button.classList.contains('sc-mini') ? '▶ ' : '') + w[0] + ' <span class="ipa">' + w[1] + '</span>';
+  }
+
+  function show(i){
+    index = i;
+    answered = false;
+    target = Math.random() < 0.5 ? 0 : 1;
+    var pair = PAIRS[i];
+
+    steps.forEach(function(step, n){
+      if(n === i) step.setAttribute('aria-current', 'step'); else step.removeAttribute('aria-current');
     });
-  }
-
-  function playWord(word, button){
-    var audio = audioFor(word);
-
-    stopOtherWordAudio(audio);
-    audio.currentTime = 0;
-
-    if(button){
+    pairLabel.textContent = 'Пара ' + (i + 1) + ' из ' + PAIRS.length + ' · ' + pair.tag;
+    if(teaserIpa) teaserIpa.innerHTML = pair.ipa;
+    answers.forEach(function(button){
+      label(button, Number(button.dataset.slot));
       button.disabled = true;
-    }
-
-    audio.play().catch(function(){
-      if(button){
-        button.disabled = false;
-      }
+      button.setAttribute('aria-pressed', 'false');
     });
+    minis.forEach(function(button){ label(button, Number(button.dataset.slot)); });
+    playBtn.textContent = '▶ Послушать слово';
+    teaser.hidden = false;
+    feedback.hidden = true;
+    finalBox.hidden = true;
+  }
 
-    function restoreButton(){
-      if(button){
-        button.disabled = false;
-      }
-
-      audio.removeEventListener('ended', restoreButton);
-    }
-
-    audio.addEventListener('ended', restoreButton);
+  function finish(){
+    scoreEl.textContent = score;
+    verdict.textContent = score === 5
+      ? 'Отличный слух. Следующий шаг - так же чётко произносить: на интенсиве Марина разбирает твою запись и говорит, что поправить.'
+      : score >= 3
+        ? 'Хорошая база. Пары, где была ошибка, - ровно то, что тренируем на интенсиве: сначала слышать, потом произносить.'
+        : 'Эти пары легко спутать: в русском для них часто один звук. Различать их на слух учимся с первого дня интенсива.';
+    teaser.hidden = true;
+    feedback.hidden = true;
+    finalBox.hidden = false;
+    playBtn.disabled = true;
+    if(window.msTrack) window.msTrack('quiz_done', score);
   }
 
   playBtn.addEventListener('click', function(){
-    playWord(target, playBtn);
-
-    answers.forEach(function(button){
-      button.disabled = false;
-    });
+    play(target, playBtn);
+    playBtn.textContent = '▶ Послушать ещё раз';
+    if(!answered) answers.forEach(function(button){ button.disabled = false; });
   });
 
   answers.forEach(function(button){
     button.addEventListener('click', function(){
       if(answered) return;
-
       answered = true;
 
-      answers.forEach(function(answerButton){
-        answerButton.setAttribute(
-          'aria-pressed',
-          String(answerButton === button)
-        );
-      });
+      var slot = Number(button.dataset.slot);
+      var right = slot === target;
+      if(right) score++;
 
-      var chosenWord = button.getAttribute('data-word');
+      answers.forEach(function(other){ other.setAttribute('aria-pressed', String(other === button)); });
+      steps[index].setAttribute('data-result', right ? 'right' : 'wrong');
 
-      feedbackText.textContent = chosenWord === target
-        ? 'Да, здесь звучало «' + target + '».'
-        : 'Эти гласные легко спутать. Здесь звучало «' + target + '».';
-
-      if(teaser){
-        teaser.hidden = true;
-      }
-
-      if(feedback){
-        feedback.hidden = false;
-      }
+      feedbackText.textContent = right
+        ? 'Да, здесь звучало «' + word(target) + '».'
+        : 'Эти звуки легко спутать. Здесь звучало «' + word(target) + '».';
+      explain.textContent = PAIRS[index].explain;
+      nextBtn.textContent = index === PAIRS.length - 1 ? 'Узнать результат →' : 'Следующая пара →';
+      teaser.hidden = true;
+      feedback.hidden = false;
     });
   });
 
-  miniButtons.forEach(function(button){
-    button.addEventListener('click', function(){
-      playWord(button.getAttribute('data-word'), button);
-    });
+  minis.forEach(function(button){
+    button.addEventListener('click', function(){ play(Number(button.dataset.slot), button); });
   });
+
+  nextBtn.addEventListener('click', function(){
+    stop();
+    if(index < PAIRS.length - 1) show(index + 1); else finish();
+  });
+
+  restart.addEventListener('click', function(){
+    stop();
+    score = 0;
+    playBtn.disabled = false;
+    steps.forEach(function(step){ step.removeAttribute('data-result'); });
+    show(0);
+  });
+
+  show(0);
 })();
 
 // Атлас звуков: контур языка - одна линия, которая перетекает между
@@ -452,6 +504,7 @@
   }
 
   send('pageview');
+  window.msTrack = function(label, value){ send('click', { label: String(label).slice(0, 60), value: value }); };
 
   // кнопки в бота: место на странице + хвост атрибуции
   function placeOf(a){
@@ -513,5 +566,250 @@
   }, 1000);
   document.addEventListener('visibilitychange', function(){
     if(document.visibilityState === 'hidden') send('leave', { value: Math.round((Date.now() - t0) / 1000) });
+  });
+})();
+
+/* Блоки на компонентах SL UI Library (MIT, github.com/SLtowl/sl-ui-library), 2026-10-20:
+   перекрашены в палитру сайта и переведены. Плеер звуков - matte-playback + matte-speed-slider,
+   карусель отзывов - matte-carousel-navigation, вкладки FAQ - matte-tabs-navigation,
+   сравнение тарифов - matte-overlays-plan-compare-v11, уведомление - matte-toast-feedback. */
+
+// Плеер примеров у звуков программы: Play/Pause с морфингом иконки и скорость 0.5-1×.
+(function(){
+  var button = document.getElementById('atlasPlay');
+  var row = document.querySelector('.sound-row');
+  var words = document.getElementById('atlasWords');
+  var range = document.getElementById('atlasRate');
+  var out = document.getElementById('atlasRateOut');
+
+  if(!button || !row || !range) return;
+
+  var WORDS = { i:'sheep · see · team', ae:'cat · bad · map', er:'bird · word · learn', or:'door · talk · four' };
+  var label = button.querySelector('.sl-playback__label');
+  var audio = new Audio();
+  var sound = 'i';
+  audio.preload = 'none';
+
+  function setPlaying(on){
+    button.dataset.playing = String(on);
+    button.setAttribute('aria-label', on ? 'Пауза' : 'Послушать примеры');
+    if(label) label.textContent = on ? 'Пауза' : 'Слушать';
+  }
+
+  function setRate(value){
+    var rate = Number(value);
+    range.value = String(rate);
+    range.setAttribute('aria-valuetext', rate + '×');
+    range.style.setProperty('--fill', ((rate - 0.5) / 0.5 * 100) + '%');
+    if(out) out.textContent = rate + '×';
+    audio.playbackRate = rate;
+    audio.defaultPlaybackRate = rate;
+  }
+
+  button.addEventListener('click', function(){
+    if(button.dataset.playing === 'true'){ audio.pause(); return; }
+    var src = '/assets/audio/snd-' + sound + '.mp3';
+    if(audio.getAttribute('src') !== src) audio.src = src;
+    if(audio.ended) audio.currentTime = 0;
+    audio.playbackRate = Number(range.value);
+    audio.play().catch(function(){ setPlaying(false); });
+  });
+  audio.addEventListener('play', function(){ setPlaying(true); });
+  audio.addEventListener('pause', function(){ setPlaying(false); });
+  audio.addEventListener('ended', function(){ setPlaying(false); audio.currentTime = 0; });
+
+  range.addEventListener('input', function(){ setRate(range.value); });
+  document.querySelectorAll('#atlasSpeed [data-rate]').forEach(function(stop){
+    stop.addEventListener('click', function(){ setRate(stop.dataset.rate); });
+  });
+
+  row.querySelectorAll('[data-sound]').forEach(function(key){
+    key.addEventListener('click', function(){
+      sound = key.getAttribute('data-sound');
+      audio.pause();
+      audio.removeAttribute('src');
+      if(words) words.textContent = WORDS[sound] || '';
+    });
+  });
+
+  setRate(1);
+})();
+
+// Карусель отзывов: горизонтальная лента со snap, стрелки и точки.
+(function(){
+  var track = document.getElementById('tcarTrack');
+  var prev = document.getElementById('tcarPrev');
+  var next = document.getElementById('tcarNext');
+  var dotsBox = document.getElementById('tcarDots');
+
+  if(!track || !prev || !next || !dotsBox) return;
+
+  var slides = Array.prototype.slice.call(track.children);
+  var dots = slides.map(function(slide, i){
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'tcar-dot';
+    dot.setAttribute('aria-label', 'Отзыв ' + (i + 1) + ' из ' + slides.length);
+    dot.addEventListener('click', function(){ go(i); });
+    dotsBox.appendChild(dot);
+    return dot;
+  });
+
+  function perView(){
+    var first = slides[0];
+    return first ? Math.max(1, Math.round(track.clientWidth / first.getBoundingClientRect().width)) : 1;
+  }
+
+  function current(){
+    var left = track.scrollLeft, best = 0, dist = Infinity;
+    slides.forEach(function(slide, i){
+      var d = Math.abs(slide.offsetLeft - track.offsetLeft - left);
+      if(d < dist){ dist = d; best = i; }
+    });
+    return best;
+  }
+
+  function go(i){
+    var max = slides.length - perView();
+    i = Math.max(0, Math.min(i, max));
+    track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+  }
+
+  function sync(){
+    var i = current(), n = perView(), max = slides.length - n;
+    dots.forEach(function(dot, k){
+      dot.hidden = k > max;
+      dot.setAttribute('aria-current', String(k === i));
+    });
+    prev.disabled = i <= 0;
+    next.disabled = i >= max;
+  }
+
+  prev.addEventListener('click', function(){ go(current() - 1); });
+  next.addEventListener('click', function(){ go(current() + 1); });
+  track.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); go(current() - 1); }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); go(current() + 1); }
+  });
+  var timer;
+  track.addEventListener('scroll', function(){ clearTimeout(timer); timer = setTimeout(sync, 60); }, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();
+
+// Вкладки FAQ со скользящей линией.
+(function(){
+  var list = document.querySelector('.faq-tabs');
+
+  if(!list) return;
+
+  var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+  var line = list.querySelector('.faq-tabs-indicator');
+
+  function place(tab){
+    if(!line) return;
+    line.style.width = tab.offsetWidth + 'px';
+    line.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+  }
+
+  function select(tab, focus){
+    tabs.forEach(function(t){
+      var on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      if(panel) panel.hidden = !on;
+    });
+    place(tab);
+    if(focus) tab.focus();
+  }
+
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){
+      select(tab);
+      if(window.msTrack) window.msTrack('faq_tab', i);
+    });
+    tab.addEventListener('keydown', function(e){
+      var k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if(k === undefined) return;
+      e.preventDefault();
+      select(tabs[(k + tabs.length) % tabs.length], true);
+    });
+  });
+
+  // ссылка #objections ведёт на вкладку «Сомнения»
+  function fromHash(){ if(location.hash === '#objections') select(tabs[0]); }
+  window.addEventListener('hashchange', fromHash);
+  // без JS видны оба списка и нет вкладок, с JS - вкладки и первый список
+  list.hidden = false;
+  select(tabs[0]);
+
+  window.addEventListener('resize', function(){
+    var on = tabs.filter(function(t){ return t.getAttribute('aria-selected') === 'true'; })[0];
+    if(on) place(on);
+  });
+  requestAnimationFrame(function(){ place(tabs[0]); list.setAttribute('data-ready', 'true'); });
+})();
+
+// Окно сравнения тарифов: нативный <dialog>, переключатель «Только различия».
+(function(){
+  var dialog = document.getElementById('cmpDialog');
+  var open = document.getElementById('cmpOpen');
+  var close = document.getElementById('cmpClose');
+  var diff = document.getElementById('cmpDiff');
+
+  if(!dialog || !open || typeof dialog.showModal !== 'function'){
+    return;
+  }
+  open.hidden = false;
+
+  open.addEventListener('click', function(){
+    dialog.showModal();
+    if(window.msTrack) window.msTrack('compare_open', 1);
+  });
+  close.addEventListener('click', function(){ dialog.close(); });
+  dialog.addEventListener('click', function(e){ if(e.target === dialog) dialog.close(); });
+  dialog.addEventListener('close', function(){ open.focus(); });
+  diff.addEventListener('change', function(){ dialog.classList.toggle('only-diff', diff.checked); });
+})();
+
+// Уведомление при переходе в бота: что нажать дальше.
+(function(){
+  var toast = document.getElementById('toast');
+  var title = document.getElementById('toastTitle');
+  var detail = document.getElementById('toastDetail');
+  var close = document.getElementById('toastClose');
+
+  if(!toast || !title || !detail) return;
+
+  var timer = null, left = 0, started = 0;
+
+  function hide(){
+    clearTimeout(timer);
+    toast.classList.remove('is-on');
+    setTimeout(function(){ if(!toast.classList.contains('is-on')) toast.hidden = true; }, 260);
+  }
+
+  function run(ms){ left = ms; started = Date.now(); clearTimeout(timer); timer = setTimeout(hide, ms); }
+
+  function show(t, d){
+    title.textContent = t;
+    detail.textContent = d;
+    toast.hidden = false;
+    requestAnimationFrame(function(){ toast.classList.add('is-on'); });
+    run(7000);
+  }
+
+  // пауза таймера, пока курсор или фокус на уведомлении
+  toast.addEventListener('mouseenter', function(){ clearTimeout(timer); left -= Date.now() - started; });
+  toast.addEventListener('mouseleave', function(){ run(Math.max(left, 1500)); });
+  if(close) close.addEventListener('click', hide);
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest && e.target.closest('a[href*="t.me/Marinatoken_bot"]');
+    if(!link) return;
+    var dialog = link.closest('dialog');
+    if(dialog && dialog.open) dialog.close();
+    show('Открываем бота Марины', 'Нажми «Старт» - и ты в листе ожидания. О старте записи на 2027 сообщим в боте.');
   });
 })();
